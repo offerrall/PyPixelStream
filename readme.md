@@ -10,16 +10,16 @@ PyPixelStream is a cross-platform live streaming software designed specifically 
 ## Installation
 ### Windows
 ```bash
-git clone https://github.com/ejemplo/nombre_del_proyecto.git
-cd nombre_del_proyecto
+git clone https://github.com/offerrall/PyPixelStream
+cd PyPixelStream
 pip install -r requirements.txt
 cd src
 main.py
 ```
 ### Linux and macOS
 ```bash
-git clone
-cd nombre_del_proyecto
+git clone https://github.com/offerrall/PyPixelStream
+cd PyPixelStream
 pip3 install -r requirements.txt
 cd src
 python3 main.py
