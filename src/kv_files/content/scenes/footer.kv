@@ -1,0 +1,37 @@
+#:import colors config.colors.colors
+#:import images config.images.images
+#:import ImageButton uix.image_button.ImageButton
+
+<ScenesFooter>
+    orientation: 'horizontal'
+    BoxLayout:
+        orientation: 'horizontal'
+        padding: dp(2)
+        Widget:
+            size_hint_x: None
+            width: dp(10)
+        ImageButton:
+            id: add_scene_button
+            source: images["plus"]
+            press_callback: lambda: root.add_scene()
+            width: dp(25)
+        ImageButton:
+            id: remove_scene_button
+            source: images["minus"]
+            press_callback: lambda: root.remove_scene()
+            width: dp(25)
+        Widget:
+            size_hint_x: 1
+        ImageButton:
+            id: up_scene_button
+            source: images["up"]
+            press_callback: lambda: root.move_scene_up()
+            width: dp(25)
+        ImageButton:
+            id: down_scene_button
+            source: images["down"]
+            press_callback: lambda: root.move_scene_down()
+            width: dp(25)
+        Widget:
+            size_hint_x: None
+            width: dp(10)

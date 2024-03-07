@@ -1,0 +1,50 @@
+
+
+<ConfigContent>:
+    padding: dp(10)
+    orientation: 'vertical'
+    BoxLayout:
+        id: resolution
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: dp(30)
+
+        Label:
+            text: 'Resolution'
+            haligh: 'left'
+            text_size: self.width, None
+            size_hint_x: 1
+        
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: 1
+            spacing: dp(10)
+
+            TextInput:
+                id: resolution_x
+                text: '800'
+                input_filter: 'int'
+                multiline: False
+                on_text_validate: root.update_resolution()
+            Label:
+                text: 'x'
+                haligh: 'center'
+                text_size: self.width, None
+                size_hint_x: None
+                size: self.texture_size
+            
+            TextInput:
+                id: resolution_y
+                text: '600'
+                input_filter: 'int'
+                multiline: False
+                on_text_validate: root.update_resolution()
+    BoxLayout:
+        id: spacer
+        size_hint_y: 1
+            
+
+
+
+
+        

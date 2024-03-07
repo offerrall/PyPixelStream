@@ -1,0 +1,32 @@
+#:import colors config.colors.colors
+
+<MainModalView>
+    pos_hint: root.custom_pos_hint
+    size_hint: root.custom_size_hint
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '10dp'
+        spacing: '10dp'
+
+        Label:
+            text: root.title
+            size_hint_y: None
+            height: '30dp'
+            font_size: '20dp'
+            bold: True
+            canvas.before:
+                Color:
+                    rgba: colors["separate"]
+                Line:
+                    points: self.x, self.y, self.width + self.x, self.y
+                    width: 1        
+
+        BoxLayout:
+            id: main_modal_box
+            orientation: 'vertical'
+
+
+
+
+    

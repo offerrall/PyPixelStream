@@ -1,0 +1,16 @@
+<SourceProperties>:
+    BoxLayout:
+        id: source_properties
+        orientation: 'vertical'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(30)
+            Label:
+                text: "Name"
+                halign: 'left'
+                text_size: self.width, None 
+            TextInput:
+                id: layer_name_input
+                multiline: False
+                on_text: root.update_name()

@@ -1,0 +1,50 @@
+#:import colors config.colors.colors
+
+<TemplateScreen>:
+    BoxLayout:
+
+        orientation: 'vertical'
+
+        BoxLayout:
+            id: screen_header
+            size_hint_y: None
+            height: dp(30)
+
+            canvas.before:
+                Color:
+                    rgba: colors["separate"]
+                Line:
+                    points: self.x, self.top - self.height + dp(1), self.right, self.top - self.height + dp(1)
+                    width: dp(1)
+            
+            Label:
+                id: screen_title
+                text: root.title
+                font_size: '13pt'
+                color: colors["font"]
+                bold: True
+                pos_hint: {'center_x': .5, 'center_y': .5}
+
+        BoxLayout:
+            id: screen_content
+            canvas.before:
+                Color:
+                    rgba: colors["secundary_background"]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        BoxLayout:
+            id: screen_footer
+            size_hint_y: None
+            height: dp(20)
+
+            canvas.before:
+                Color:
+                    rgba: colors["separate"]
+                Line:
+                    points: self.x, self.y + self.height, self.right, self.y + self.height
+                    width: dp(1)
+                
+
+

@@ -1,0 +1,26 @@
+#:import colors config.colors.colors
+
+<AddSceneModal>
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: '30dp'
+            Label:
+                text: 'Name'
+            TextInput:
+                id: scene_name
+                text: ''
+                multiline: False
+                hint_text: root.placeholder_text
+                max_length: 20
+        Widget:
+            size_hint_y: 1
+        Button:
+            text: 'Add'
+            size_hint_y: None
+            height: '30dp'
+            background_color: colors['background']
+            on_release: root.add_scene(scene_name.text)
+

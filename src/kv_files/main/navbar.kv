@@ -1,0 +1,29 @@
+#:import colors config.colors.colors
+#:import images config.images.images
+
+<NavBar>:
+    spacing: dp(10)
+    Widget:
+        size_hint_x: 1
+
+    ItemNavBar:
+        text: "Layers"
+        icon: images['layers']
+        is_selected: True
+        icon_selected: images['layers_selected']
+        selected_change: root.change_screen
+
+    ItemNavBar:
+        text: "Screens"
+        icon: images['screens']
+        icon_selected: images['screens_selected']
+        selected_change: root.change_screen
+    
+    ItemNavBar:
+        text: "Config"
+        icon: images['config']
+        icon_selected: images['config_selected']
+        selected_change: root.change_screen
+    
+    Widget:
+        size_hint_x: 1

@@ -1,0 +1,13 @@
+kivy
+numpy
+plyer
+pyobjus
+art
+requests
+ffpyplayer
+
+# Optional for some features
+pillow # for GIF support
+mss # for screen capture
+psutil # for system monitor
+# pyaudiowpatch in windows, https://github.com/s0d3s/PyAudioWPatch/

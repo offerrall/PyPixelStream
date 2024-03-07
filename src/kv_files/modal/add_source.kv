@@ -1,0 +1,54 @@
+#:import colors config.colors.colors
+
+<SourceTypeSelector>:
+
+    canvas.before:
+        Color:
+            rgba: colors['selected'] if root.is_selected else colors['secundary_background']
+        Line:
+            width: dp(2)
+            points: self.x, self.y+dp(2), self.x+self.width, self.y+dp(2)
+
+    Label:
+        text: root.text
+
+<AddSourceModal>:
+    BoxLayout:
+        id: add_source_modal
+        orientation: 'vertical'
+
+        BoxLayout:
+            id: buttons_type_selector
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(30)
+
+        BoxLayout:
+            id: box_source_types
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(30)
+            Label:
+                halign: 'left'
+                text_size: self.width, None 
+                text: "Type"
+            Spinner:
+                id: source_type_spinner
+                text: "Select Layer Type"
+                on_text: root.update_properties()
+        ScrollView:
+            orientation: 'vertical'
+            do_scroll_x: False
+            do_scroll_y: True
+
+            BoxLayout:
+                size_hint_y: None
+                height: dp(30)
+                id: box_source_properties
+                orientation: 'vertical'
+        Button:
+            text: 'Add'
+            size_hint_y: None
+            height: '30dp'
+            background_color: colors['background']
+            on_release: root.add_source()

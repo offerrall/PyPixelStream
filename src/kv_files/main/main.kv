@@ -1,0 +1,78 @@
+#:import colors config.colors.colors
+#:import images config.images.images
+#:import Animation kivy.animation.Animation
+
+<MainContainer>:
+    BoxLayout:
+        # Background for the app
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: colors["background"]
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        BoxLayout:
+            # Header for the app
+            id: header
+            size_hint_y: None
+            height: dp(50)
+            padding: dp(10)
+
+            canvas.before:
+                Color:
+                    rgba: colors["secundary_background"]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                Color:
+                    rgba: colors["separate"]
+                Line:
+                    points: self.x, self.top - self.height, self.right, self.top - self.height
+                    width: dp(1)
+
+            Image:
+                source: images["logo"]
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+        
+        BoxLayout:
+            # Body for the app
+            id: body
+            size: root.size
+            pos: root.pos
+            size_hint_y: 1
+            orientation: 'vertical'
+            padding: dp(10)
+            spacing: dp(10)
+            
+            RelativeLayout:
+                id: video_player_container
+                
+            Content:
+                id: content
+        
+        BoxLayout:
+            # Footer for the app
+            id: footer
+            size_hint_y: None
+            height: dp(50)
+            padding: dp(5)
+
+            canvas.before:
+                Color:
+                    rgba: colors["secundary_background"]
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                Color:
+                    rgba: colors["separate"]
+                Line:
+                    points: self.x, self.y + self.height, self.right, self.y + self.height
+                    width: dp(1)
+            
+            NavBar:
+                id: nav_bar
+
+

@@ -1,0 +1,40 @@
+#:import colors config.colors.colors
+#:import images config.images.images
+#:import ImageButton uix.image_button.ImageButton
+
+<SourcesFooter>:
+    orientation: 'horizontal'
+    BoxLayout:
+        orientation: 'horizontal'
+        padding: dp(2)
+        Widget:
+            size_hint_x: None
+            width: dp(10)
+        ImageButton:
+            id: add_source_button
+            source: images["plus"]
+            press_callback: lambda: root.add_source()
+            width: dp(25)
+        ImageButton:
+            id: remove_source_button
+            source: images["minus"]
+            press_callback: lambda: root.remove_source()
+            opacity: 1 if root.mode_is_selected else 0.5
+            width: dp(25)
+        Widget:
+            size_hint_x: 1
+        ImageButton:
+            id: up_source_button
+            source: images["up"]
+            press_callback: lambda: root.move_source_up()
+            opacity: 1 if root.mode_is_selected else 0.5
+            width: dp(25)
+        ImageButton:
+            id: down_source_button
+            source: images["down"]
+            press_callback: lambda: root.move_source_down()
+            opacity: 1 if root.mode_is_selected else 0.5
+            width: dp(25)
+        Widget:
+            size_hint_x: None
+            width: dp(10)

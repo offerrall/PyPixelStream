@@ -1,0 +1,157 @@
+#:import colors config.colors.colors
+#:import images config.images.images
+#:import ImageButton uix.image_button.ImageButton
+
+<ModifyFilterModal>:
+    ScrollView:
+        orientation: 'vertical'
+        do_scroll_x: False
+        do_scroll_y: True
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(5)
+            id: modify_filter_modal_content
+            orientation: 'vertical'
+
+<AddFilterModal>:
+    BoxLayout:
+        id: add_filter_modal
+        orientation: 'vertical'
+        BoxLayout:
+            id: box_filter_types
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(30)
+            Label:
+                halign: 'left'
+                text_size: self.width, None 
+                text: "Type"
+            Spinner:
+                id: filter_type_spinner
+                text: "Select Filter Type"
+                on_text: root.update_properties()
+        ScrollView:
+            orientation: 'vertical'
+            do_scroll_x: False
+            do_scroll_y: True
+
+            BoxLayout:
+                size_hint_y: None
+                height: dp(30)
+                id: box_filter_properties
+                orientation: 'vertical'
+        Button:
+            text: 'Add'
+            size_hint_y: None
+            height: '30dp'
+            background_color: colors['background']
+            on_release: root.add_filter()
+
+<FilterItem>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: dp(30)
+
+    canvas.before:
+        Color:
+            rgba: colors["none"]
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: colors["selected"] if root.is_selected else colors["secundary_background"]
+        Line:
+            width: dp(2)
+            points: [self.x, self.y+dp(2), self.x+self.width, self.y+dp(2)]
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: dp(30)
+        pos_hint: {'center_y': .5}
+        padding: dp(5)
+
+        Label:
+            text: root.filter.name[:20] + '...' if len(root.filter.name) > 20 else root.filter.name
+            color: colors["font"]
+            font_size: '15sp'
+            size_hint_x: None
+            size: self.texture_size
+
+        Widget:
+            size_hint_x: 1
+        ImageButton:
+            id: edit_button
+            source: images["edit_text"]
+            press_callback: root.edit
+            width: dp(25)
+            opacity: 0.5 if root.is_selected else 0
+        ImageButton:
+            id: duplicate_button
+            source: images["duplicate"]
+            press_callback: root.duplicate
+            width: dp(25)
+            opacity: 0.5 if root.is_selected else 0
+        ImageButton:
+            id: view_button
+            source: images["openeye"] if root.is_visible else images["closedeye"]
+            press_callback: root.view
+            width: dp(25)
+            opacity: 0.7
+
+<FiltersModal>:
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint_y: 1
+    
+        BoxLayout:
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
+            id: filters_scroll
+
+    BoxLayout:
+        id: footer
+        orientation: 'vertical'
+        size_hint_y: None
+        height: dp(20)
+
+
+<FiltersFooter>:
+    orientation: 'horizontal'
+    BoxLayout:
+        orientation: 'horizontal'
+        padding: dp(2)
+        Widget:
+            size_hint_x: None
+            width: dp(5)
+        ImageButton:
+            id: add_filter_button
+            source: images["plus"]
+            press_callback: lambda: root.add_filter()
+            width: dp(25)
+        ImageButton:
+            id: remove_filter_button
+            source: images["minus"]
+            press_callback: lambda: root.remove_filter()
+            opacity: 1 if root.mode_is_selected else 0.5
+            width: dp(25)
+        Widget:
+            size_hint_x: 1
+        ImageButton:
+            id: up_filter_button
+            source: images["up"]
+            press_callback: lambda: root.move_filter_up()
+            opacity: 1 if root.mode_is_selected else 0.5
+            width: dp(25)
+        ImageButton:
+            id: down_filter_button
+            source: images["down"]
+            press_callback: lambda: root.move_filter_down()
+            opacity: 1 if root.mode_is_selected else 0.5
+            width: dp(25)
+        Widget:
+            size_hint_x: None
+            width: dp(5)

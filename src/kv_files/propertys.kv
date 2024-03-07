@@ -1,0 +1,136 @@
+<PropertyTextInput>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+    Label:
+        text: root.property_label_text
+        halign: 'left'
+        text_size: self.width, None 
+    TextInput:
+        id: text_input
+        multiline: False
+        on_text: root.update_property()
+
+<PropertyTimeSelector>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+    Label:
+        text: root.property_label_text
+        halign: 'left'
+        text_size: self.width, None 
+    BoxLayout:
+        orientation: 'horizontal'
+        Label:
+            text: "H"
+            halign: 'center'
+            text_size: self.width, None
+        Spinner:
+            id: hour_spinner
+            text: "00"
+            values: [str(x).zfill(2) for x in range(24)]
+            on_text: root.update_property()
+        Label:
+            text: "M"
+            halign: 'center'
+            text_size: self.width, None
+        Spinner:
+            id: minute_spinner
+            text: "00"
+            values: [str(x).zfill(2) for x in range(60)]
+            on_text: root.update_property()
+        Label:
+            text: "S"
+            halign: 'center'
+            text_size: self.width, None
+        Spinner:
+            id: second_spinner
+            text: "00"
+            values: [str(x).zfill(2) for x in range(60)]
+            on_text: root.update_property()
+
+<PropertySlider>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+    Label:
+        text: root.property_label_text
+        halign: 'left'
+        text_size: self.width, None 
+    Slider:
+        id: slider
+        min: root.property_min
+        max: root.property_max
+        value: root.source.properties[root.property_name]
+        on_value: root.update_property()
+
+<PropertyBoolean>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+    Label:
+        text: root.property_label_text
+        halign: 'left'
+        text_size: self.width, None 
+    Switch:
+        id: switch
+        on_active: root.update_property()
+
+<PropertyBooleanButton>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+    Label:
+        text: root.property_label_text
+        halign: 'left'
+        text_size: self.width, None 
+    Button:
+        id: button
+        text: "Apply"
+        on_release: root.update_property()
+
+<PropertyColor>
+    id: property_color
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+    Label:
+        text: root.property_label_text
+        halign: 'left'
+        text_size: self.width, None 
+    Button:
+        id: color_button
+        on_release: root.open_color_picker()
+        background_color: 0, 0, 0, 0
+        canvas.before:
+            Color:
+                rgba: root.color_kivy
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+<PropertySpinner>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+    Label:
+        text: root.property_label_text
+        halign: 'left'
+        text_size: self.width, None 
+    Spinner:
+        id: spinner
+        text: "Select"
+        on_text: root.update_property()
+
+<PropertyFilepath>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+    Label:
+        id: filepath_label
+        text: root.property_label_text
+        halign: 'left'
+        text_size: self.width, None
+    Button:
+        text: "Select File"
+        on_release: root.open_filechooser()

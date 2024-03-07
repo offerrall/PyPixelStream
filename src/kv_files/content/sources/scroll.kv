@@ -1,0 +1,78 @@
+#:import colors config.colors.colors
+#:import images config.images.images
+#:import ImageButton uix.image_button.ImageButton
+
+<SourcesItem>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: dp(30)
+
+    canvas.before:
+        Color:
+            rgba: colors["secundary_background"] if not root.is_selected else colors["background"]
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: colors["selected"] if root.is_selected else colors["background"]
+        Line:
+            width: dp(2)
+            points: [self.x, self.y+dp(2), self.x+self.width, self.y+dp(2)]
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: dp(30)
+        pos_hint: {'center_y': .5}
+        padding: dp(5)
+
+        Label:
+            text: root.source.name[:20] + '...' if len(root.source.name) > 20 else root.source.name
+            color: colors["font"]
+            font_size: '15sp'
+            size_hint_x: None
+            size: self.texture_size
+
+        Widget:
+            size_hint_x: 1
+        ImageButton:
+            id: edit_button
+            source: images["edit_text"]
+            press_callback: root.edit
+            width: dp(25)
+            opacity: 0.5 if root.is_selected else 0
+        ImageButton:
+            id: duplicate_button
+            source: images["duplicate"]
+            press_callback: root.duplicate
+            width: dp(25)
+            opacity: 0.5 if root.is_selected else 0
+        ImageButton:
+            id: filter_button
+            source: images["filter"]
+            press_callback: root.view_filters
+            width: dp(25)
+            opacity: 0.5 if root.is_selected else 0
+        ImageButton:
+            id: view_button
+            source: images["openeye"] if root.is_visible else images["closedeye"]
+            press_callback: root.view
+            width: dp(25)
+            opacity: 0.7
+        ImageButton:
+            id: lock_button
+            source: images["unlock"] if root.is_selectable else images["lock"]
+            press_callback: root.lock
+            width: dp(25)
+            opacity: 0.7
+
+<SourcesScroll>:
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        
+        BoxLayout:
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
+            id: sources_scroll
