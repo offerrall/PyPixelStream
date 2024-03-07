@@ -74,7 +74,7 @@ PyPixelStream is built with Python and uses the following libraries:
 - **psutil**: For the system monitor source.
 - **pyaudiowpatch**: For the audio visualizer source, only on Windows.
 
-*[pyaudiowpatch](./https://github.com/s0d3s/PyAudioWPatch/tree/master) must be installed manually, it is not included in the requirements.txt file.
+*[pyaudiowpatch](https://github.com/s0d3s/PyAudioWPatch) must be installed manually, it is not included in the requirements.txt file.
 
 ## TODO
 - [ ] Add Documentation.
