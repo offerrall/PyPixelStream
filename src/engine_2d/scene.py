@@ -7,11 +7,13 @@ from .serialize.serialize import source_to_dict, dict_to_source, save_scene_to_f
 from random import choices
 from string import ascii_letters, digits
 
-def random_id(len_id: int = 60) -> str:
-    all_chars = ascii_letters + digits
-    return ''.join(choices(all_chars, k=len_id))
 
 class Scene:
+
+    """
+    This class manages the scenes of the application, it is in charge of managing the sources and the filters of the Scene.
+    It is also in charge of saving the state of the scene in a json file.
+    """
 
     def __init__(self,
                  name: str,
@@ -23,7 +25,7 @@ class Scene:
         self.filters: FiltersList = FiltersList()
         self.internal_id: str = internal_id
         if self.internal_id is None:
-            self.internal_id: str = random_id()
+            self.internal_id: str = ''.join(choices(ascii_letters + digits, k=60))
 
     def save(self, folder: str) -> None:
         save_scene_to_file(self.name,
@@ -99,7 +101,10 @@ class Scene:
             source.connect()
 
     def update(self, background: ndarray) -> None:
-
+        """
+        This method updates the scene by updating the sources and applying the filters to the background.
+        is basically the main loop of the scene and is called by the engine.
+        """
         selected_mode = False
         
         for source in self.sources:

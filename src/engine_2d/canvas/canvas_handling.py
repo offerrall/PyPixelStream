@@ -7,7 +7,10 @@ from .canvas_boundaries import source_on_canvas_boundaries
 def get_source_at_position(sources: list[Source],
                            position: tuple[int, int],
                            canvas_size: tuple[int, int]) -> Source | None:
-
+    """
+    This function returns the source at the given position. if there is no source at the given position it returns None.
+    Its used to get the source that is being clicked on the canvas by the user.
+    """
     x, y = position
     sources = sorted(sources, key=lambda source: source.order, reverse=True)
 
@@ -31,6 +34,10 @@ def apply_mask_to_background(background: ndarray,
                              sXs: slice,
                              cYs: slice,
                              cXs: slice):
+    """
+    This function applies a mask to a frame.
+    the mask is used to apply the frame to the background only in the areas where the mask is True.
+    """
     mask = mask[sYs, sXs]
     try:
         background[cYs, cXs] = where(mask[..., None],
@@ -43,6 +50,10 @@ def apply_source_to_background(background: ndarray,
                                source: Source,
                                frame: ndarray,
                                mask: ndarray | None = None):
+    """
+    This function applies a source to a background.
+    It applies the source to the background only in the areas where the source is visible.
+    """
 
     canvas_size = (background.shape[1], background.shape[0])
     source_boundaries = source_on_canvas_boundaries(source, canvas_size)

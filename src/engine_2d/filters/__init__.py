@@ -8,6 +8,10 @@ from .flip import Flip
 
 
 def get_filters_list():
+    """
+    To add a new filter, you have to import it in this file and add it,
+    then in uix.filter_propertys you can define the properties of the filter to be able to modify it from the app.
+    """
     dict_of_filters = {
         "Grayscale": Grayscale,
         "Brightness Contrast": BrightnessContrast,

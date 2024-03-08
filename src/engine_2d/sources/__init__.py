@@ -1,13 +1,3 @@
-ignore_audio = False
-
-try:
-    from .media.audio import AudioVisualizer
-except ImportError:
-    ignore_audio = True
-    print("Audio Visualizer is only available on Windows")
-    print("If you are on Windows, make sure you have installed pyaudiowpatch")
-    print("https://github.com/s0d3s/PyAudioWPatch/")
-
 from .effect.solid import SolidColor
 from .effect.color_frizzles import ColorFrizzles
 from .effect.rainbow import Rainbow
@@ -31,13 +21,32 @@ from .text.timer import Timer
 from .text.date import Date
 from .text.crypto_price import CryptoPrice
 
+ignore_audio = False
+
+try:
+    from .media.audio import AudioVisualizer
+except ImportError:
+    ignore_audio = True
+    print("Audio Visualizer is only available on Windows")
+    print("If you are on Windows, make sure you have installed pyaudiowpatch")
+    print("https://github.com/s0d3s/PyAudioWPatch/")
+
 def get_source_type_list():
+
+    """
+    To add a new source, you have to import it in this file and add it to the corresponding list, then in uix.source_propertys you can define the properties of the source to be able to modify it from the app.
+    in uix.source_propertys you can define the properties that the source will have to be able to modify it from the app.
+    """
+
     media = get_media_source_type_list()
     text = get_text_source_type_list()
     effect = get_effect_source_type_list()
     return {**media, **text, **effect}
 
 def get_media_source_type_list():
+    """
+    Any source that has to be loaded from outside the program is considered media.
+    """
     dict_source_type = {
         "Image": Image,
         "GIF": GIF,
@@ -52,6 +61,9 @@ def get_media_source_type_list():
     return dict_source_type
 
 def get_text_source_type_list():
+    """
+    Any font that generates only text is considered a text font.
+    """
     dict_source_type = {
         "Text": Text,
         "Clock": Clock,
@@ -64,6 +76,9 @@ def get_text_source_type_list():
     return dict_source_type
 
 def get_effect_source_type_list():
+    """
+    Any source that generates a visual effect is considered an effect.
+    """
     dict_source_type = {
         "Solid Color": SolidColor,
         "Gradient": Gradient,

@@ -22,12 +22,19 @@ class Main(BoxLayout):
         Window.bind(on_request_close=self.on_request_close)
 
     def update(self, dt):
+        """
+        This calls update on the engine and updates the video feed.
+        """
         check = self.main_container.engine.update()
         if check:
             self.main_container.interactive_resize_video.set_frame(self.main_container.engine.background)
         Clock.schedule_once(self.update)
 
     def on_request_close(self, *args):
+        """
+        This ensures that changes are saved before closing the application and disconnects sources.
+        Prevents some threads from running in the background.
+        """
         for scene in self.main_container.engine.scenes:
             scene.save(self.main_container.engine.path_scenes)
             for source in scene.sources:

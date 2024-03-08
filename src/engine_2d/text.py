@@ -30,6 +30,9 @@ stampate
 sweet"""
 
 def get_fonts() -> list[str]:
+    """
+    The list if not definitive, feel free to add or remove fonts from _fonts.
+    """
     return _fonts.split()
 
 def convert_text_to_image(text: str,

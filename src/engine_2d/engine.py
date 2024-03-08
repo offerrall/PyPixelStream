@@ -17,6 +17,11 @@ from numpy import ndarray, zeros, uint8
 
 class Engine:
 
+    """
+    This class manages the engine of the application, it is in charge of managing the scenes and the background of the application.
+    It is also in charge of saving the state of the application in a json file.
+    """
+
     def __init__(self,
                  size: tuple[int, int] = (48, 32),
                  path_save: str = "/saved/",

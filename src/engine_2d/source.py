@@ -5,6 +5,22 @@ from .filter import FiltersList
 
 class Source:
 
+    """
+    This class is the basis for all sources that can be added to a scene.
+    All objects that you want to add to a scene must inherit from this class.
+    Each source has its common attributes and its own attributes.
+    Its own attributes must be managed in a special dictionary called properties.
+    This dictionary is a CachedDict, see the CachedDict documentation for more information.
+    Each source also has a list of filters that can be applied to it. Check the Filter class for more information.
+
+    This class is an abstract class, so you cannot instantiate it directly unless you know what you are doing.
+    The update() method must be implemented in every class that inherits from Source.
+    The connect() and disconnect() methods are optional and must be implemented if you require the source to do something when connecting or disconnecting.
+
+    You can look at engine_2d/sources/ for examples of how sources can be implemented.
+    After implementing a new source you should add to the engine_2d/sources/__init__.py file the import of the new source.
+    """
+
     def __init__(self,
                  name: str,
                  order: int,

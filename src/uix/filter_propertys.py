@@ -7,7 +7,10 @@ from uix.simple_popup import set_simple_popup
 from engine_2d.filter import FiltersList, Filter
 
 
-def get_filter_properties(filter: Filter):
+def get_filter_properties(filter: Filter) -> callable:
+    """
+    This function returns the function to set the properties of a filter.
+    """
     class_name = filter.__class__.__name__
 
     dict_filter_functions = {
@@ -49,10 +52,10 @@ class FilterProperties(BoxLayout):
         self.last_valid_name = self.ids.filter_name_input.text
         self.filter.name = self.ids.filter_name_input.text
 
-def no_set_properties(filter, properties_scrollview):
+def no_set_properties(filter: Filter, properties_scrollview: BoxLayout) -> float:
     return dp(0)
 
-def set_flip_properties(filter, properties_scrollview):
+def set_flip_properties(filter: Filter, properties_scrollview: BoxLayout) -> float:
     height = dp(60)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -66,7 +69,7 @@ def set_flip_properties(filter, properties_scrollview):
 
     return height
 
-def set_white_mask_properties(filter, properties_scrollview):
+def set_white_mask_properties(filter: Filter, properties_scrollview: BoxLayout) -> float:
     height = dp(60)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -80,11 +83,11 @@ def set_white_mask_properties(filter, properties_scrollview):
 
     return height
 
-def set_grayscale_properties(filter, properties_scrollview):
+def set_grayscale_properties(filter: Filter, properties_scrollview: BoxLayout) -> float:
     height = dp(0)
     return height
 
-def set_wrap_around_shift_properties(filter, properties_scrollview):
+def set_wrap_around_shift_properties(filter: Filter, properties_scrollview: BoxLayout) -> float:
     height = dp(60)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -104,7 +107,7 @@ def set_wrap_around_shift_properties(filter, properties_scrollview):
 
     return height
 
-def set_circle_mask_properties(filter, properties_scrollview):
+def set_circle_mask_properties(filter: Filter, properties_scrollview: BoxLayout) -> float:
     height = dp(60)
     
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -121,7 +124,7 @@ def set_circle_mask_properties(filter, properties_scrollview):
     properties_scrollview.add_widget(box_layout)
     return height
 
-def set_brightness_contrast_properties(filter, properties_scrollview):
+def set_brightness_contrast_properties(filter: Filter, properties_scrollview: BoxLayout) -> float:
     height = dp(60)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -141,7 +144,7 @@ def set_brightness_contrast_properties(filter, properties_scrollview):
 
     return height
 
-def set_chroma_key_properties(filter, properties_scrollview):
+def set_chroma_key_properties(filter: Filter, properties_scrollview: BoxLayout) -> float:
     height = dp(30)
     
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)

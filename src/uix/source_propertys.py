@@ -12,7 +12,10 @@ from engine_2d.text import get_fonts
 
 from utils.cryptocurrency.cryptocurrency import get_only_name_list, get_fiat_list
 
-def get_source_properties(source: Source):
+def get_source_properties(source: Source) -> callable:
+    """
+    This function returns the function that sets the properties of the source in the properties panel.
+    """
     class_name = source.__class__.__name__
 
     dict_source_functions = {
@@ -68,10 +71,10 @@ class SourceProperties(BoxLayout):
         self.last_valid_name = self.ids.layer_name_input.text
         self.source.name = self.ids.layer_name_input.text
 
-def no_set_properties(source, properties_scrollview):
+def no_set_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     return dp(0)
 
-def set_rainbow_twister_properties(source, properties_scrollview):
+def set_rainbow_twister_properties(source: Source, properties_scrollview) -> float:
     height = dp(30)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -84,7 +87,7 @@ def set_rainbow_twister_properties(source, properties_scrollview):
 
     return height
 
-def set_audio_visualizer_properties(source, properties_scrollview):
+def set_audio_visualizer_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(120)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -107,7 +110,7 @@ def set_audio_visualizer_properties(source, properties_scrollview):
 
     return height
 
-def set_gif_properties(source, properties_scrollview):
+def set_gif_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(30)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -120,7 +123,7 @@ def set_gif_properties(source, properties_scrollview):
 
     return height
 
-def set_color_frizzles_effect_properties(source, properties_scrollview):
+def set_color_frizzles_effect_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(60)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -136,11 +139,11 @@ def set_color_frizzles_effect_properties(source, properties_scrollview):
 
     return height
 
-def set_webcam_properties(source, properties_scrollview):
+def set_webcam_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(0)
     return height
 
-def set_rainbow_effect_properties(source, properties_scrollview):
+def set_rainbow_effect_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(30)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -152,7 +155,7 @@ def set_rainbow_effect_properties(source, properties_scrollview):
     properties_scrollview.add_widget(box_layout)
     return height
 
-def set_snow_fall_effect_properties(source, properties_scrollview):
+def set_snow_fall_effect_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(150)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -179,7 +182,7 @@ def set_snow_fall_effect_properties(source, properties_scrollview):
 
     return height
 
-def set_screen_capture_properties(source, properties_scrollview):
+def set_screen_capture_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(30)
 
     monitor_list = source.get_indexs()
@@ -193,7 +196,7 @@ def set_screen_capture_properties(source, properties_scrollview):
 
     return height
 
-def set_image_properties(source, properties_scrollview):
+def set_image_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(30)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -206,7 +209,7 @@ def set_image_properties(source, properties_scrollview):
 
     return height
 
-def set_random_chase_properties(source, properties_scrollview):
+def set_random_chase_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(60)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -224,7 +227,7 @@ def set_random_chase_properties(source, properties_scrollview):
 
     return height
 
-def set_solid_color_properties(source, properties_scrollview):
+def set_solid_color_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(30)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -235,7 +238,7 @@ def set_solid_color_properties(source, properties_scrollview):
 
     return height
 
-def set_game_of_life_properties(source, properties_scrollview):
+def set_game_of_life_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(120)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -257,7 +260,7 @@ def set_game_of_life_properties(source, properties_scrollview):
 
     return height
 
-def set_gradient_properties(source, properties_scrollview):
+def set_gradient_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(90)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -276,7 +279,7 @@ def set_gradient_properties(source, properties_scrollview):
 
     return height
 
-def set_video_properties(source, properties_scrollview):
+def set_video_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(60)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -293,7 +296,7 @@ def set_video_properties(source, properties_scrollview):
     return height
 
 
-def set_text_properties(source, properties_scrollview):
+def set_text_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(120)
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
 
@@ -316,8 +319,7 @@ def set_text_properties(source, properties_scrollview):
 
     return height
 
-
-def set_crypto_price_properties(source, properties_scrollview):
+def set_crypto_price_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(180)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -348,7 +350,7 @@ def set_crypto_price_properties(source, properties_scrollview):
 
     return height
 
-def set_clock_properties(source, properties_scrollview):
+def set_clock_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(150)
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
 
@@ -373,7 +375,7 @@ def set_clock_properties(source, properties_scrollview):
 
     return height
 
-def set_stopwatch_properties(source, properties_scrollview):
+def set_stopwatch_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(210)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -404,7 +406,7 @@ def set_stopwatch_properties(source, properties_scrollview):
 
     return height
 
-def set_timer_text_properties(source, properties_scrollview):
+def set_timer_text_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(240)
 
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
@@ -438,7 +440,7 @@ def set_timer_text_properties(source, properties_scrollview):
 
     return height
 
-def set_date_text_properties(source, properties_scrollview):
+def set_date_text_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(180)
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
 
@@ -468,7 +470,7 @@ def set_date_text_properties(source, properties_scrollview):
 
     return height
 
-def set_system_monitor_properties(source, properties_scrollview):
+def set_system_monitor_properties(source: Source, properties_scrollview: BoxLayout) -> float:
     height = dp(210)
     box_layout = BoxLayout(orientation="vertical", size_hint_y=None, height=height)
     box_layout.add_widget(PropertySlider(source=source,

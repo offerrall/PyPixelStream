@@ -4,7 +4,20 @@ from .cached_dict import CachedDict
 
 
 class Filter:
-    
+
+    """
+    This class is the basis for all filters that can be added to a source or a scene.
+    All objects that you want to add to a source or a scene must inherit from this class.
+    Each filter has its common attributes and properties.
+    Its properties must be managed in a special dictionary called properties. More information in the CachedDict documentation.
+
+    This class is an abstract class, so you cannot instantiate it directly unless you know what you are doing.
+    The apply() method must be implemented in every class that inherits from Filter.
+    After implementing a new filter you should add to the engine_2d/filters/__init__.py file the import of the new filter.
+
+    You can look at engine_2d/filters/ for examples of how filters can be implemented.
+    """
+
     def __init__(self, name: str, order: int = 0):
         self.name: str = name
         self.order: int = order
@@ -22,6 +35,10 @@ class Filter:
         raise NotImplementedError("Child classes must implement this method.")
 
 class FiltersList:
+
+    """
+    This class is a list of filters of a source or scene.
+    """
 
     def __init__(self):
         self.filters: list[Filter] = []

@@ -4,7 +4,11 @@ from ..source import Source
 def source_on_canvas_boundaries(source: Source,
                                 canvas_size: tuple[int, int]
                                 ) -> dict[str, tuple[int, int]]:
-
+    """
+    This function returns the source boundaries on the canvas and the visible source boundaries on the canvas.
+    The source boundaries are the position of the source on the canvas and the visible source boundaries are the
+    position of the source on the canvas that is visible.
+    """
     x_position, y_position = int(source.x), int(source.y)
     width, height = source.width, source.height
 

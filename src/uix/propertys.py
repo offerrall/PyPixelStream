@@ -8,10 +8,15 @@ from uix.utils import rgb_to_kivy_color, kivy_color_to_rgb
 from plyer import filechooser
 
 from engine_2d.source import Source
+from engine_2d.filter import Filter
 
 
 class BoxProperty(BoxLayout):
-    source: Source = ObjectProperty(None)
+    """
+    This class is the base class for all the properties in the property panel.
+    The properties are used to change the properties of the sources or filters.
+    """
+    source: Source | Filter = ObjectProperty(None)
     property_name = ObjectProperty(None)
     property_label_text = ObjectProperty(None)
 

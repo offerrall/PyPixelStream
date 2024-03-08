@@ -4,6 +4,10 @@ from kivy.uix.image import CoreImage
 def kivy_read_image(image_path: str,
                     alpha: bool = False
                     ):
+    """
+    Read an image using kivy and return it as a numpy array.
+    You could use pil for this, but this way you keep the core engine with just numpy and kivy.
+    """
     core_image = CoreImage(image_path)
     texture = core_image.texture
     return texture_to_np_array(texture, alpha)
@@ -35,6 +39,9 @@ def invert_image(image: ndarray, vertical: bool = False) -> ndarray:
     return flip(image, axis=1)
 
 def resize_mask_nearest_neighbor(mask: ndarray, new_width: int, new_height: int) -> ndarray:
+    """
+    This function resizes a mask using the nearest neighbor algorithm.
+    """
     height, width = mask.shape
 
     x_scale = width / new_width
@@ -50,6 +57,9 @@ def resize_mask_nearest_neighbor(mask: ndarray, new_width: int, new_height: int)
 def nearest_neighbor_resize_vectorized(image: ndarray,
                                        new_width: int,
                                        new_height: int) -> ndarray:
+    """
+    This function resizes an image using the nearest neighbor algorithm.
+    """
     height, width, channels = image.shape
 
     x_scale = width / new_width
