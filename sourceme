@@ -1,0 +1,16 @@
+#! /bin/bash
+
+working_path=$( dirname $0 )
+
+cd ${working_path}
+
+if [ "$0" = "$BASH_SOURCE" ]; then
+    echo "This script designed to be sourced, not run"
+fi
+
+if ! [ -d venv ]; then
+	make
+fi
+
+. venv/bin/activate
+
