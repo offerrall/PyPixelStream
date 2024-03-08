@@ -6,6 +6,9 @@ from engine_2d.engine import Engine
 from uix.source_propertys import SourceProperties
 
 class ModifySourceModal(BoxLayout):
+    """
+    Modal for modifying a source
+    """
     source: Source = ObjectProperty(None)
     engine: Engine = ObjectProperty(None)
 

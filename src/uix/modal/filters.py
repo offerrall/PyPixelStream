@@ -24,6 +24,9 @@ class ModifyFilterModal(BoxLayout):
         self.ids.modify_filter_modal_content.height = commun_properties.size_height
         
 class AddFilterModal(BoxLayout):
+    """
+    Modal for adding a new filter
+    """
     add_filter_callback: callable = ObjectProperty(None)
     filters_list: FiltersList = ObjectProperty(None)
     

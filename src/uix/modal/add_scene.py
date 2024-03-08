@@ -5,6 +5,9 @@ from uix.simple_popup import set_simple_popup
 from engine_2d.engine import Engine
 
 class AddSceneModal(BoxLayout):
+    """
+    Modal for adding a new scene
+    """
     engine: Engine = ObjectProperty(None)
     placeholder_text = StringProperty("Screen name")
     name_callback: callable = ObjectProperty(None)

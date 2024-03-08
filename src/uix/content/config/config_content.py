@@ -5,6 +5,9 @@ from engine_2d.engine import Engine
 from uix.simple_popup import set_simple_popup
 
 class ConfigContent(BoxLayout):
+    """
+    Content of the config section
+    """
     engine: Engine = ObjectProperty(None)
     video_player = ObjectProperty(None)
     

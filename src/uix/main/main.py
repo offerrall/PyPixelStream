@@ -7,7 +7,9 @@ from engine_2d.scene import Scene
 from engine_2d.engine import Engine
 
 class MainContainer(BoxLayout):
-
+    """
+    Main container for the application
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.version = "0.1"

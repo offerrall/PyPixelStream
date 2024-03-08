@@ -9,7 +9,9 @@ from uix.modal.add_scene import AddSceneModal
 from uix.simple_popup import set_simple_popup
 
 class ScenesFooter(BoxLayout):
-    
+    """
+    Footer of the scenes list, with the buttons to add, remove, move up and move down the scenes
+    """
     engine: Engine = ObjectProperty(None)
     change_callback: callable = ObjectProperty(None)
 

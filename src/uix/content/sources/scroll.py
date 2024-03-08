@@ -11,6 +11,9 @@ from uix.modal.modify_source import ModifySourceModal
 from uix.modal.filters import FiltersModal, FiltersFooter
 
 class SourcesItem(ButtonBehavior, BoxLayout):
+    """
+    Item of the source list
+    """
     engine: Engine = ObjectProperty(None)
     source: Source = ObjectProperty(None)
     update_callback: callable = ObjectProperty(None)
@@ -76,6 +79,9 @@ class SourcesItem(ButtonBehavior, BoxLayout):
 
 
 class SourcesScroll(BoxLayout):
+    """
+    This class is the scroll of the source list
+    """
     engine: Engine = ObjectProperty(None)
     video_player: InteractiveResizeVideoRender = ObjectProperty(None)
     change_selected_callback: callable = ObjectProperty(None)

@@ -11,7 +11,9 @@ from uix.content.config.config_content import ConfigContent
 from engine_2d.engine import Engine
 
 class ContentScreenManager(ScreenManager):
-    
+    """
+    Screen manager for the content of the application, all the screens are added here
+    """
     engine: Engine = ObjectProperty(None)
     video_player = ObjectProperty(None)
 

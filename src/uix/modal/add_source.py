@@ -29,6 +29,9 @@ class SourceTypeSelector(ButtonBehavior, BoxLayout):
                 self.press_callback(self)
 
 class AddSourceModal(BoxLayout):
+    """
+    Modal for adding a new source
+    """
     engine: Engine = ObjectProperty(None)
     add_source_callback: callable = ObjectProperty(None)
     

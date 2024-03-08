@@ -7,7 +7,9 @@ from uix.modal.add_source import AddSourceModal
 from engine_2d.engine import Engine
 
 class SourcesFooter(BoxLayout):
-
+    """
+    Footer of the sources list, with the buttons to add, remove, move up and move down the sources
+    """
     engine: Engine = ObjectProperty(None)
     change_callback: callable = ObjectProperty(None)
     mode_is_selected: bool = BooleanProperty(False)

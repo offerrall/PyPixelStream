@@ -6,6 +6,9 @@ from engine_2d.engine import Engine
 
 
 class EditSceneModal(BoxLayout):
+    """
+    Modal for editing a scene
+    """
     engine: Engine = ObjectProperty(None)
     placeholder_text = StringProperty("Screen name")
     name_callback: callable = ObjectProperty(None)

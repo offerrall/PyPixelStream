@@ -4,6 +4,9 @@ from kivy.uix.button import ButtonBehavior
 
 
 class ItemNavBar(ButtonBehavior, BoxLayout):
+    """
+    Item of the navigation bar
+    """
     text = StringProperty('')
     icon = StringProperty('')
     icon_selected = StringProperty('')

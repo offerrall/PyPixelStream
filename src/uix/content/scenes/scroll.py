@@ -9,6 +9,9 @@ from uix.modal.edit_scene import EditSceneModal
 from uix.modal.filters import FiltersModal, FiltersFooter
 
 class SceneItem(ButtonBehavior, BoxLayout):
+    """
+    Item of the scene list
+    """
     name = StringProperty("")
     press_callback = ObjectProperty(None)
     duplicate_callback = ObjectProperty(None)
@@ -54,6 +57,9 @@ class SceneItem(ButtonBehavior, BoxLayout):
         self.is_selected = True
 
 class ScenesScroll(BoxLayout):
+    """
+    Scroll of the scenes list
+    """
     engine: Engine = ObjectProperty(None)
     video_player = ObjectProperty(None)
     update_callback: callable = ObjectProperty(None)

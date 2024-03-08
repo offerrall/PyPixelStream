@@ -2,6 +2,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 
 class NavBar(BoxLayout):
+    """
+    Main navigation bar for the application
+    """
     content_screen_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
