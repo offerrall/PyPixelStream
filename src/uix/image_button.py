@@ -4,6 +4,9 @@ from kivy.properties import ObjectProperty
 
 
 class ImageButton(ButtonBehavior, Image):
+    """
+    Custom widget that combines an image and a button.
+    """
     press_callback = ObjectProperty(None)
 
     def on_press(self):

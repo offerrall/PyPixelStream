@@ -2,6 +2,9 @@ from kivy.uix.modalview import ModalView
 from kivy.properties import StringProperty, DictProperty, ListProperty, ObjectProperty
 
 class MainModalView(ModalView):
+    """
+    This class is a base class for all modal views.
+    """
     title = StringProperty("")
     custom_pos_hint = DictProperty({"center_x": 0.5, "y": 0})
     custom_size_hint = ListProperty([1, 0.5])

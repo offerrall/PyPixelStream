@@ -10,6 +10,9 @@ from config.images import images
 from uix.image_button import ImageButton
 
 def load_kv_files():
+    """
+    Load all kv files in the kv_files folder
+    """
     folder_kv_files = './kv_files/'
     path_program = sys.argv[0]
     path_program = os.path.dirname(path_program)

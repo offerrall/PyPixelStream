@@ -6,6 +6,9 @@ from engine_2d.source import Source
 
 
 class InteractiveResizeVideoRender(InteractiveVideoRender):
+    """
+    This class is a widget that renders a video frame and allows the user to interact with the sources.
+    """
     def __init__(self,
                  size: tuple[int, int],
                  source_list: list[Source],

@@ -6,6 +6,10 @@ from kivy.graphics.instructions import InstructionGroup
 from numpy import ndarray
 
 class VideoRender(Widget):
+    """
+    This class is a widget that renders a video frame.
+    Is the father of the class InteractiveVideoRender
+    """
     def __init__(self, size: tuple[int, int], **kwargs):
         super(VideoRender, self).__init__(**kwargs)
         self.set_size(size)

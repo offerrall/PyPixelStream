@@ -1,6 +1,10 @@
 import sys
 import os
 
+"""
+This file is used to store the path of the images used in the application.
+"""
+
 path_images = "./config/assets/images/"
 
 path_program = sys.argv[0]

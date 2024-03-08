@@ -12,6 +12,9 @@ def set_simple_popup(title: str,
                      size: tuple = (dp(300), dp(100)),
                      color_separator: tuple = colors['selected']
                      ):
+    """
+    Set a simple popup with a title and a message
+    """
     pop = Popup(title=title,
                 title_align=text_align,
                 content=Label(text=text),
