@@ -49,6 +49,9 @@ class Scene:
         return False
 
     def add_source(self, source: Source) -> None:
+        """
+        This method adds a source to the scene, if the source already exists it raises a ValueError.
+        """
         if self.check_name_exists(source.name):
             raise ValueError(f"Source with name '{source.name}' already exists")
 
@@ -56,6 +59,9 @@ class Scene:
         self.update_order()
 
     def remove_source(self, source: Source) -> None:
+        """
+        This method removes a source from the scene, if the source is not found it raises a ValueError.
+        """
         try:
             source.disconnect()
             self.sources.remove(source)
@@ -64,6 +70,9 @@ class Scene:
         self.update_order()
 
     def get_source(self, name: str) -> Source:
+        """
+        This method returns a source with the name given, if the source is not found it raises a ValueError.
+        """
         for source in self.sources:
             if source.name == name:
                 return source

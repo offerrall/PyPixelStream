@@ -10,6 +10,7 @@ from engine_2d.filter import FiltersList, Filter
 def get_filter_properties(filter: Filter) -> callable:
     """
     This function returns the function to set the properties of a filter.
+    All fuctions return the height of the properties added to the properties_scrollview
     """
     class_name = filter.__class__.__name__
 
@@ -37,6 +38,7 @@ class FilterProperties(BoxLayout):
         self.size_height = dp(0)
         self.last_valid_name = self.filter.name
         self.ids.filter_name_input.text = self.filter.name
+        # size_height is the sum of the heights of the properties of the filter more 30dp
         self.size_height = get_filter_properties(self.filter)(self.filter, self.ids.filter_properties) + dp(30)
 
     def update_name(self):

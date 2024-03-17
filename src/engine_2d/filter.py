@@ -55,6 +55,9 @@ class FiltersList:
             f.order = i
     
     def add(self, new_filter: Filter) -> None:
+        """
+        This method adds a filter to the list of filters, if the filter already exists it raises a ValueError.
+        """
         name_new_filter = new_filter.name
         if self.check_name_exists(name_new_filter):
             raise ValueError(f"Filter with name '{name_new_filter}' already exists")
@@ -66,6 +69,9 @@ class FiltersList:
         return self.filters
 
     def remove(self, name: str) -> None:
+        """
+        This method removes a filter from the list of filters, if the filter is not found it raises a ValueError.
+        """
         for i, f in enumerate(self.filters):
             if f.name == name:
                 self.filters.pop(i)

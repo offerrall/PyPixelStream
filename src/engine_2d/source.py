@@ -42,6 +42,9 @@ class Source:
         self.filters: FiltersList = FiltersList()
     
     def set_height_and_width(self, height: int, width: int) -> None:
+        """
+        This method sets the height and width of the source, and updates the properties dictionary for the height and width.
+        """
         atm_size = self.width, self.height
         if atm_size == (width, height):
             return
@@ -51,27 +54,48 @@ class Source:
         self.width = width
     
     def set_position(self, position: tuple[int, int]) -> None:
+        """
+        This method sets the position of the source, and updates the properties dictionary for the position.
+        """
         self.x = position[0]
         self.y = position[1]
         self.properties['position'] = position
     
     def set_visible(self, visible: bool) -> None:
+        """
+        This method sets the visibility of the source, and updates the properties dictionary for the visibility.
+        """
         self.is_visible = visible
         self.properties['visible'] = visible
     
     def set_selectable(self, selectable: bool) -> None:
+        """
+        This method sets the selectability of the source, and updates the properties dictionary for the selectability.
+        """
         self.is_selectable = selectable
         self.properties['selectable'] = selectable
 
     def set_selected(self, selected: bool) -> None:
+        """
+        This method sets the selected state of the source, and updates the properties dictionary for the selected state.
+        """
         self.is_selected = selected
         self.properties['selected'] = selected
 
     def update(self) -> None:
+        """
+        This method updates the source, is basically the main loop of the source and is called by the scene.
+        """
         raise NotImplementedError("update() method must be implemented")
 
     def connect(self) -> None:
+        """
+        This method is called when the source is connected, use if the source needs to do something when connecting.
+        """
         pass
 
     def disconnect(self) -> None:
+        """
+        This method is called when the source is disconnected, use if the source needs to do something when disconnecting.
+        """
         pass

@@ -13,9 +13,10 @@ class InteractiveResizeVideoRender(InteractiveVideoRender):
                  size: tuple[int, int],
                  source_list: list[Source],
                  selection_color: tuple[int, int, int] = (255, 0, 0),
+                 corner_size: int = dp(10),
                  **kwargs):
         super().__init__(size, source_list, selection_color, **kwargs)
-        self.corner_size = dp(10)
+        self.corner_size = corner_size
         self._resize_mode = None
 
         self.corner_names = [

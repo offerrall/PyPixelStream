@@ -121,6 +121,9 @@ class Engine:
         self.background_template = self.background.copy()
 
     def check_scene_name(self, name: str) -> None:
+        """
+        This method checks if a scene with the same name already exists, if it does it raises a ValueError.
+        """
         for scene in self.scenes:
             if scene.name == name:
                 raise ValueError(f"Scene with name '{name}' already exists")
@@ -132,12 +135,18 @@ class Engine:
             self.scenes[i].order = i
 
     def get_scene(self, name: str) -> Scene:
+        """
+        This method returns a scene with the same name as the parameter, if it does not exist it raises a ValueError.
+        """
         for scene in self.scenes:
             if scene.name == name:
                 return scene
         raise ValueError(f"Scene with name '{name}' does not exist")
 
     def add_scene(self, scene: Scene) -> None:
+        """
+        This method adds a scene to the engine, if the scene already exists it raises a ValueError.
+        """
         self.check_scene_name(scene.name)
         self.scenes.append(scene)
         scene.save(self.path_scenes)
@@ -146,6 +155,9 @@ class Engine:
             self.set_scene(scene)
 
     def remove_scene(self, scene: Scene) -> None:
+        """
+        This method removes a scene from the engine, if the scene is not found it raises a ValueError.
+        """
         scene.disconnect()
         scene = self.get_scene(scene.name)
         if scene == self.atm_scene:
