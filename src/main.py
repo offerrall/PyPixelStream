@@ -25,9 +25,8 @@ class Main(BoxLayout):
         """
         This calls update on the engine and updates the video feed.
         """
-        check = self.main_container.engine.update()
-        if check:
-            self.main_container.interactive_resize_video.set_frame(self.main_container.engine.background)
+        self.main_container.engine.update() 
+        self.main_container.interactive_resize_video.set_frame(self.main_container.engine.background)
         Clock.schedule_once(self.update)
 
     def on_request_close(self, *args):
