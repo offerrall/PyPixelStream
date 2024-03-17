@@ -7,6 +7,7 @@ from uix.content.sources.scroll import SourcesScroll
 from uix.content.scenes.footer import ScenesFooter
 from uix.content.scenes.scroll import ScenesScroll
 from uix.content.config.config_content import ConfigContent
+from uix.video_player.interactive_resize_video import InteractiveResizeVideoRender
 
 from engine_2d.engine import Engine
 
@@ -15,11 +16,12 @@ class ContentScreenManager(ScreenManager):
     Screen manager for the content of the application, all the screens are added here
     """
     engine: Engine = ObjectProperty(None)
-    video_player = ObjectProperty(None)
+    video_player: InteractiveResizeVideoRender = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        # Create the screens
         self.scenes_screen = TemplateScreen(name='Screens', title='Screen')
         self.scenes_footer = ScenesFooter(engine=self.engine)
         self.scenes_scroll = ScenesScroll(engine=self.engine, video_player=self.video_player)
@@ -27,6 +29,7 @@ class ContentScreenManager(ScreenManager):
         self.scenes_screen.ids.screen_footer.add_widget(self.scenes_footer)
         self.scenes_screen.ids.screen_content.add_widget(self.scenes_scroll)
 
+        # Create the layers screen
         self.layers_screen = TemplateScreen(name='Layers', title='Layers')
         self.layers_footer = SourcesFooter(engine=self.engine)
         self.layers_scroll = SourcesScroll(engine=self.engine, video_player=self.video_player)
@@ -37,6 +40,7 @@ class ContentScreenManager(ScreenManager):
         self.layers_screen.ids.screen_footer.add_widget(self.layers_footer)
         self.layers_screen.ids.screen_content.add_widget(self.layers_scroll)
         
+        # Create the config screen
         self.config_screen = TemplateScreen(name='Config', title='Config')
         self.config_content = ConfigContent(engine=self.engine,
                                             video_player=self.video_player)

@@ -15,7 +15,7 @@ from config.load_kv import load_kv_files
 class Main(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.main_container = MainContainer()
+        self.main_container = MainContainer() # This is the main container for the application
         self.add_widget(self.main_container)
 
         Clock.schedule_once(self.update)

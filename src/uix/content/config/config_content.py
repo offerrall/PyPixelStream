@@ -4,12 +4,14 @@ from kivy.properties import ObjectProperty
 from engine_2d.engine import Engine
 from uix.simple_popup import set_simple_popup
 
+from uix.video_player.interactive_resize_video import InteractiveResizeVideoRender
+
 class ConfigContent(BoxLayout):
     """
     Content of the config section
     """
     engine: Engine = ObjectProperty(None)
-    video_player = ObjectProperty(None)
+    video_player: InteractiveResizeVideoRender = ObjectProperty(None)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

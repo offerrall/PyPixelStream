@@ -8,6 +8,8 @@ from uix.main_modal_view import MainModalView
 from uix.modal.edit_scene import EditSceneModal
 from uix.modal.filters import FiltersModal, FiltersFooter
 
+from uix.video_player.interactive_resize_video import InteractiveResizeVideoRender
+
 class SceneItem(ButtonBehavior, BoxLayout):
     """
     Item of the scene list
@@ -61,7 +63,7 @@ class ScenesScroll(BoxLayout):
     Scroll of the scenes list
     """
     engine: Engine = ObjectProperty(None)
-    video_player = ObjectProperty(None)
+    video_player: InteractiveResizeVideoRender = ObjectProperty(None)
     update_callback: callable = ObjectProperty(None)
 
     def __init__(self, **kwargs):
