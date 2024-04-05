@@ -37,12 +37,12 @@ def image_to_panels(image: np.ndarray) -> np.ndarray:
     panels = [np.flipud(panel) for panel in panels]
     return panels
 
-def send_image_via_ws(image: np.ndarray) -> None:
+def send_image_via_ws(image: np.ndarray, frame_num: int) -> None:
     """
     This is a temporary function to send an image to the led panel
     """
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    ip = "192.168.1.105" # tmp ip
+    ip = "192.168.0.103" # tmp ip
     port = 8888 # tmp port
     chunks_num = 4
     panels = image_to_panels(image)
@@ -52,13 +52,9 @@ def send_image_via_ws(image: np.ndarray) -> None:
     chunk_size = int(len(panels_strip_) / chunks_num)
     chunks = [panels_strip_[i:i+chunk_size] for i in range(0, len(panels_strip_), chunk_size)]
     
-    
     for i in range(chunks_num):
-        packet = i.to_bytes(1, 'big')
+        packet = frame_num.to_bytes(1, 'big')
+        packet += i.to_bytes(1, 'big')
         packet += chunks[i].tobytes()
         sock.sendto(packet, (ip, port))
         sleep(0.002)
-    
-    
-    
-        
