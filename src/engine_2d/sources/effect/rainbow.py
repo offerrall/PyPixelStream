@@ -15,6 +15,7 @@ class Rainbow(Source):
         self.properties['fps'] = fps
         self.current_hue = 0
         self.last_frame_time = 0
+        self.edit_if = ['width', 'height']
         self.reset()
 
     def reset(self) -> None:
@@ -25,9 +26,8 @@ class Rainbow(Source):
     def update(self) -> None:
         force_reset = False
         
-        edit_if = ['width', 'height']
         for prop in self.properties.cache:
-            if prop in edit_if:
+            if prop in self.edit_if:
                 self.reset()
                 self.properties.reset_cache()
                 force_reset = True

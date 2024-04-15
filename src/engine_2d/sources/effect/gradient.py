@@ -16,13 +16,12 @@ class Gradient(Source):
         self.properties['start_color'] = start_color
         self.properties['end_color'] = end_color
         self.properties['gradient_type'] = gradient_type
+        self.edit_if = ['start_color', 'end_color', 'gradient_type', 'width', 'height']
 
     def update(self) -> None:
         if self.properties.cache:
-            edit_if = ['start_color', 'end_color', 'gradient_type', 'width', 'height']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.create_gradient()
                     break
 

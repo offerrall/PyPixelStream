@@ -22,7 +22,7 @@ class SnowFall(Source):
         self.properties['transparent_background'] = transparent_background
         self.properties['fps'] = fps
         self.properties['snowflake_chance'] = snowflake_chance
-
+        self.edit_if = ['snow_color', 'background_color', 'transparent_background', 'width', 'height']
         self.last_frame_time = 0
         self.reset()
 
@@ -31,12 +31,10 @@ class SnowFall(Source):
         self.mask = None
 
     def update(self) -> None:
-
-        edit_if = ['snow_color', 'background_color', 'transparent_background', 'width', 'height']
         force_reset = False
 
         for prop in self.properties.cache:
-            if prop in edit_if:
+            if prop in self.edit_if:
                 self.reset()
                 self.properties.reset_cache()
                 force_reset = True
