@@ -83,6 +83,9 @@ class FiltersList:
               frame: ndarray,
               mask: ndarray | None = None
               ) -> tuple[ndarray, ndarray]:
+        """
+        This method applies all the filters in the list to a frame and a mask.
+        """
         
         if not self.filters:
             return frame, mask

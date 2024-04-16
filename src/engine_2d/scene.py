@@ -28,6 +28,9 @@ class Scene:
             self.internal_id: str = ''.join(choices(ascii_letters + digits, k=60))
 
     def save(self, folder: str) -> None:
+        """
+        This method saves the scene to a json file.
+        """
         save_scene_to_file(self.name,
                            self.internal_id,
                            self.order,
@@ -36,11 +39,17 @@ class Scene:
                            folder)
 
     def update_order(self) -> None:
+        """
+        This method updates the order of the sources.
+        """
         self.sources.sort(key=lambda s: s.order)
         for i, source in enumerate(self.sources):
             source.order = i + 1
 
     def check_name_exists(self, name: str, strip: bool = True) -> bool:
+        """
+        This method checks if a source with the name given exists.
+        """
         if strip:
             name = name.strip()
         for source in self.sources:
@@ -79,14 +88,23 @@ class Scene:
         raise ValueError(f"Source with name '{name}' not found")
 
     def up_source(self, source: Source) -> None:
+        """
+        This method moves a source up in the order and updates the order of the sources.
+        """
         source.order += 1.5
         self.update_order()
     
     def down_source(self, source: Source) -> None:
+        """
+        This method moves a source down in the order and updates the order of the sources.
+        """
         source.order -= 1.5	
         self.update_order()
 
     def duplicate_source(self, source: Source) -> None:
+        """
+        This method duplicates a source and adds it to the scene.
+        """
         new_name = f"{source.name} copy"
         while True:
             try:
@@ -101,11 +119,17 @@ class Scene:
         self.add_source(copy_source)
 
     def disconnect(self) -> None:
+        """
+        This method disconnects all the sources of the scene.
+        """
         for source in self.sources:
             source.set_selected(False)
             source.disconnect()
 
     def connect(self) -> None:
+        """
+        This method connects all the sources of the scene.
+        """
         for source in self.sources:
             source.connect()
 
