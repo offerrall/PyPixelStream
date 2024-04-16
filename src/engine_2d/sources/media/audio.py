@@ -29,6 +29,7 @@ class AudioVisualizer(Source):
         self.thread = None
         self.stop_thread = False
         self.no_audio = False
+        self.edit_if = ['width', 'height']
 
     def set_not_audio_text(self) -> None:
         error = "No audio\ndetected"
@@ -76,10 +77,8 @@ class AudioVisualizer(Source):
         
         forced_update = False
         if self.properties.cache:
-            edit_if = ['width', 'height']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.reset()
                     forced_update = True
                     break

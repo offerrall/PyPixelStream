@@ -16,13 +16,12 @@ class Image(Source):
                  image_path: str = ""):
         super().__init__(name, order, width, height)
         self.properties['image_path'] = image_path
+        self.edit_if = ['image_path', 'width', 'height']
 
     def update(self) -> None:
         if self.properties.cache:
-            edit_if = ['image_path', 'width', 'height']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.create_image()
                     break
 

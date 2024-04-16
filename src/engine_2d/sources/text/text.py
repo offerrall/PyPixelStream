@@ -22,6 +22,7 @@ class Text(Source):
         self.properties['text_from_file'] = text_from_file
         self.properties['background_color'] = background_color
         self.cache_txt_text = None
+        self.edit_if = ['text', 'font', 'color', 'background_color', 'width', 'height', 'text_from_file']
 
     def create_text(self) -> None:
         text = self.properties['text']
@@ -75,9 +76,8 @@ class Text(Source):
                 self.create_text()
                 return
         if self.properties.cache:
-            edit_if = ['text', 'font', 'color', 'background_color', 'width', 'height', 'text_from_file']
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.create_text()
                     break
             self.properties.reset_cache()

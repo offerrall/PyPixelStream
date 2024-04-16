@@ -14,6 +14,7 @@ class WrapAroundShift(Filter):
 
         self.accumulated_shift_x = 0
         self.accumulated_shift_y = 0
+        self.edit_if = ['shift_x', 'shift_y']
 
     def reset(self):
         self.accumulated_shift_x = 0
@@ -22,10 +23,8 @@ class WrapAroundShift(Filter):
     def apply(self, frame: ndarray, mask: ndarray | None = None) -> tuple[ndarray, ndarray]:
 
         if self.properties.cache:
-            edit_if = ['shift_x', 'shift_y']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.reset()
                     break
 

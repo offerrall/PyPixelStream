@@ -44,12 +44,18 @@ class FiltersList:
         self.filters: list[Filter] = []
 
     def check_name_exists(self, name: str) -> bool:
+        """
+        This method checks if a filter with the name given exists.
+        """
         for f in self.filters:
             if f.name == name:
                 return True
         return False
     
     def sort(self) -> None:
+        """
+        This method normalizes the order of the filters and sorts them by order.
+        """
         self.filters.sort(key=lambda f: f.order)
         for i, f in enumerate(self.filters):
             f.order = i
