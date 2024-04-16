@@ -13,12 +13,18 @@ def kivy_read_image(image_path: str,
     return texture_to_np_array(texture, alpha)
 
 def convert_bgra_to_rgb(frame_bgra):
+    """
+    This function converts a frame from BGRA to RGB.
+    """
     frame_rgb = frame_bgra[:, :, [2, 1, 0]]
     return frame_rgb
 
 def texture_to_np_array(texture,
                         alpha: bool = False
                         ):
+    """
+    This function converts a kivy texture to a numpy array.
+    """
     size = texture.width, texture.height
     rgba_image = frombuffer(texture.pixels, dtype=uint8).reshape(size[1], size[0], 4)
     
@@ -33,6 +39,9 @@ def texture_to_np_array(texture,
     return rgb_image, alpha_mask
 
 def invert_image(image: ndarray, vertical: bool = False) -> ndarray:
+    """
+    This function inverts an image vertically or horizontally.
+    """
     if vertical:
         return flip(image, axis=0)
 
