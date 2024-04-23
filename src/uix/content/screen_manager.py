@@ -44,9 +44,10 @@ class ContentScreenManager(ScreenManager):
         
         # Create the send screen
         self.send_screen = TemplateScreen(name='Send', title='Send Devices')
-        self.send_footer = SendFooter(engine=self.engine)
         self.send_scroll = SendScroll(engine=self.engine)
+        self.send_footer = SendFooter(engine=self.engine, send_scroll=self.send_scroll)
         self.send_footer.change_callback = self.send_scroll.update
+        self.send_scroll.change_selected_callback = self.send_footer.set_mode
         self.send_screen.ids.screen_footer.add_widget(self.send_footer)
         self.send_screen.ids.screen_content.add_widget(self.send_scroll)
 

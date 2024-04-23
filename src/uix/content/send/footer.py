@@ -12,7 +12,18 @@ class SendFooter(BoxLayout):
     engine: Engine = ObjectProperty(None)
     change_callback: callable = ObjectProperty(None)
     mode_is_selected: bool = BooleanProperty(False)
+    send_scroll: BoxLayout = ObjectProperty(None)
 
+    def set_mode(self):
+        atm_selected_send = self.get_atm_selected_send()
+        self.mode_is_selected = atm_selected_send is not None
+
+    def get_atm_selected_send(self):
+        atm_send = None
+        scroll = self.send_scroll.ids.send_scroll
+
+        return atm_send
+    
     def add_send(self):
         test_send = SendDevice("test", "192.168.1.102", 8888)
         self.engine.sends_devices.append(test_send)
