@@ -27,7 +27,7 @@ class Main(BoxLayout):
         """
         This function sends an image to the led panel.
         """
-        send_image_via_ws(image, self.atm_frame)
+        #send_image_via_ws(image, self.atm_frame)
         self.atm_frame += 1
         if self.atm_frame == 201:
             self.atm_frame = 0

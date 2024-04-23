@@ -29,7 +29,25 @@ class SendScroll(BoxLayout):
     engine: Engine = ObjectProperty(None)
     change_selected_callback: callable = ObjectProperty(None)
 
+    def select_send(self, send: SendDevice):
+        for child in self.ids.send_scroll.children:
+            if child.send == send:
+                child.is_selected = True
+            else:
+                child.is_selected = False
+    
+    def get_atm_selected_send(self):
+        atm_send = None
+        
+        for child in self.ids.send_scroll.children:
+            if child.is_selected:
+                atm_send = child.send
+                break
+        
+        return atm_send
+    
     def update(self):
+        atm_selected_send = self.get_atm_selected_send()
         self.ids.send_scroll.clear_widgets()
         
         for send in self.engine.sends_devices:
@@ -37,6 +55,9 @@ class SendScroll(BoxLayout):
                                  send=send,
                                  press_callback=self.sync_selected)
             self.ids.send_scroll.add_widget(send_item)
+        
+        if atm_selected_send:
+            self.select_send(atm_selected_send)
         
     def sync_selected(self, send_item: SendItem):
         check_already_selected = send_item.is_selected

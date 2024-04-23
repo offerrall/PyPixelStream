@@ -53,6 +53,14 @@ class Engine:
         self.load_engine_save()
         self.set_background(self.size)
 
+    def order_sends(self) -> None:
+        """
+        This method orders the sends by their order attribute.
+        """
+        self.sends_devices.sort(key=lambda send: send.order)
+        for i in range(len(self.sends_devices)):
+            self.sends_devices[i].order = i
+        
     def load_engine_save(self) -> None:
         """
         This method loads the engine save file, if it does not exist it does nothing.
