@@ -32,7 +32,7 @@ def send_image_via_ws(image: np.ndarray, frame_num: int) -> None:
     This is a temporary function to send an image to the led panel
     """
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    ip = "192.168.0.103" # tmp ip
+    ip = "192.168.0.102" # tmp ip
     port = 8888 # tmp port
     chunks_num = 4
     panels = image_to_panels(image)
