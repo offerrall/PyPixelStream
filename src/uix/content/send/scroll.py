@@ -10,22 +10,41 @@ class SendItem(ButtonBehavior, BoxLayout):
     send: SendDevice = ObjectProperty(None)
     is_selected: bool = BooleanProperty(False)
     is_visible: bool = BooleanProperty(True)
+    press_callback: callable = ObjectProperty(None)
+
+    def on_press(self):
+        if self.press_callback:
+            self.press_callback(self)
 
     def edit(self):
-        print(f"Edit {self.send.name}")
+        if not self.is_selected and self.press_callback:
+            self.press_callback(self)
+            return
     
     def view(self):
-        print(f"View {self.send.name}")
+        self.send.is_active = not self.send.is_active
+        self.is_visible = self.send.is_active
 
 class SendScroll(BoxLayout):
     engine: Engine = ObjectProperty(None)
+    change_selected_callback: callable = ObjectProperty(None)
 
     def update(self):
-        print("Update send scroll")
         self.ids.send_scroll.clear_widgets()
         
         for send in self.engine.sends_devices:
-            print(f"Send {send.name}")
-            send_item = SendItem(engine=self.engine, send=send)
+            send_item = SendItem(engine=self.engine,
+                                 send=send,
+                                 press_callback=self.sync_selected)
             self.ids.send_scroll.add_widget(send_item)
         
+    def sync_selected(self, send_item: SendItem):
+        check_already_selected = send_item.is_selected
+
+        for child in self.ids.send_scroll.children:
+            child.is_selected = False
+        
+        send_item.is_selected = not check_already_selected
+
+        if self.change_selected_callback:
+            self.change_selected_callback()

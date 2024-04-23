@@ -14,7 +14,6 @@ class SendFooter(BoxLayout):
     mode_is_selected: bool = BooleanProperty(False)
 
     def add_send(self):
-        print("Add send")
         test_send = SendDevice("test", "192.168.1.102", 8888)
         self.engine.sends_devices.append(test_send)
         self.change_callback()
