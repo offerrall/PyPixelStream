@@ -5,12 +5,9 @@ from os.path import exists
 import sys
 import os
 
-from .serialize.serialize import (source_to_dict,
-                                  filter_to_dict,
-                                  dict_to_filter,
-                                  dict_to_source,
-                                  load_scene_from_file)
+from .serialize.serialize import *
 from .scene import Scene
+from .send import SendDevice
 
 from json import dumps, loads
 from numpy import ndarray, zeros, uint8
@@ -47,6 +44,7 @@ class Engine:
             mkdir(self.path_scenes)
         
         self.scenes: list[Scene] = []
+        self.sends_devices: list[SendDevice] = []
         self.atm_scene: Scene | None = None
         self.size: tuple[int, int] = size
         self.background: ndarray = None
