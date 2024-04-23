@@ -22,7 +22,7 @@ class SendScroll(BoxLayout):
 
     def update(self):
         print("Update send scroll")
-        self.clear_widgets()
+        self.ids.send_scroll.clear_widgets()
         
         for send in self.engine.sends_devices:
             print(f"Send {send.name}")
