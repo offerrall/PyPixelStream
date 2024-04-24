@@ -20,6 +20,8 @@ class SendItem(ButtonBehavior, BoxLayout):
         if not self.is_selected and self.press_callback:
             self.press_callback(self)
             return
+        
+        print("Edit send")
     
     def view(self):
         self.send.is_active = not self.send.is_active
@@ -54,6 +56,7 @@ class SendScroll(BoxLayout):
             send_item = SendItem(engine=self.engine,
                                  send=send,
                                  press_callback=self.sync_selected)
+            send_item.is_visible = send.is_active
             self.ids.send_scroll.add_widget(send_item)
         
         if atm_selected_send:
