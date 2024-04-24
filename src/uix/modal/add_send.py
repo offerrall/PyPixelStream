@@ -1,6 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from kivy.properties import ObjectProperty
+from kivy.metrics import dp
 from engine_2d.engine import Engine
 from engine_2d.send import WonderLand3d4832Device
 
@@ -50,7 +51,7 @@ class AddSendModal(BoxLayout):
             self.ids.box_send_properties.clear_widgets()
             type_device = WonderLand3d4832()
             self.ids.box_send_properties.add_widget(type_device)
-            self.ids.box_send_properties.height = 90
+            self.ids.box_send_properties.height = dp(90)
             self.atm_type = type_device
         
     def add_send(self):
@@ -63,7 +64,8 @@ class AddSendModal(BoxLayout):
             if name == '':
                 set_simple_popup('Error', 'Please enter a name.')
                 return
-            ip = f"{self.atm_type.ids.ip_one.text}.{self.atm_type.ids.ip_two.text}.{self.atm_type.ids.ip_three.text}.{self.atm_type.ids.ip_four.text}"
+            atm_type = self.atm_type.ids
+            ip = f"{atm_type.ip_one.text}.{atm_type.ip_two.text}.{atm_type.ip_three.text}.{atm_type.ip_four.text}"
             port = self.atm_type.ids.port.text
 
             device = WonderLand3d4832Device(name, ip=ip, port=port)

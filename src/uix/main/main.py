@@ -21,6 +21,7 @@ class MainContainer(BoxLayout):
         # interactive_resize_video is the main video player
         self.interactive_resize_video = InteractiveResizeVideoRender(size=self.engine.size, 
                                                                      source_list=self.engine.atm_scene.sources)
+        self.interactive_resize_video.sends_list = self.engine.sends_devices
         # content_screen_manager is the main screen manager
         self.content_screen_manager = ContentScreenManager(engine=self.engine,
                                                            video_player=self.interactive_resize_video)
