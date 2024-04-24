@@ -5,6 +5,9 @@ from kivy.properties import BooleanProperty
 from engine_2d.engine import Engine
 from engine_2d.send import SendDevice
 
+from uix.main_modal_view import MainModalView
+from uix.modal.add_send import AddSendModal
+
 from random import randint
 
 class SendFooter(BoxLayout):
@@ -35,14 +38,19 @@ class SendFooter(BoxLayout):
 
         return atm_send
     
-    def add_send(self):
-        rand_name = f"test{randint(0, 1000)}"
-        test_send = SendDevice(rand_name, "192.168.1.102", 8888, order=1000, is_active=True)
-        self.engine.sends_devices.append(test_send)
+    def add_send_post(self, send_device: SendDevice):
+        self.engine.sends_devices.append(send_device)
         self.engine.order_sends()
         self.change_callback()
-        self.send_scroll.select_send(test_send)
+        self.send_scroll.select_send(send_device)
         self.set_mode()
+
+    def add_send(self):
+        content = AddSendModal(engine=self.engine, add_send_callback=self.add_send_post)
+        new_scene_modal = MainModalView(title="Add Send",
+                                        widget_content=content)
+        
+        new_scene_modal.open()
     
     def remove_send(self):
         if not self.mode_is_selected:

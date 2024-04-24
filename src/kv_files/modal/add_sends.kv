@@ -1,0 +1,103 @@
+#:import colors config.colors.colors
+
+<WonderLand3d4832>
+    orientation: 'vertical'
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: '30dp'
+        Label:
+            text: 'Name'
+            halign: 'left'
+            text_size: self.width, None 
+        TextInput:
+            id: sends_name
+            text: 'WonderLand3d4832'
+            multiline: False
+            max_length: 20
+            on_text: root.check_name(sends_name)
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: '30dp'
+        Label:
+            text: 'Ip Address'
+            halign: 'left'
+            text_size: self.width, None
+        BoxLayout:
+            TextInput:
+                id: ip_one
+                text: '192'
+                multiline: False
+                input_filter: 'int'
+                on_text: root.check_ip_piece(ip_one)
+            TextInput:
+                id: ip_two
+                text: '168'
+                multiline: False
+                input_filter: 'int'
+                on_text: root.check_ip_piece(ip_two)
+            TextInput:
+                id: ip_three
+                text: '0'
+                multiline: False
+                input_filter: 'int'
+                on_text: root.check_ip_piece(ip_three)
+            TextInput:
+                id: ip_four
+                text: '0'
+                multiline: False
+                input_filter: 'int'
+                on_text: root.check_ip_piece(ip_four)
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: '30dp'
+        Label:
+            text: 'Port (8888) is default'
+            halign: 'left'
+            text_size: self.width, None 
+        TextInput:
+            id: port
+            text: '8888'
+            multiline: False
+            input_filter: 'int'
+            on_text: root.check_port(port)
+
+<AddSendModal>
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            id: box_sends_type
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(30)
+            Label:
+                halign: 'left'
+                text_size: self.width, None 
+                text: "Type"
+            Spinner:
+                id: send_type_spinner
+                text: "Select Send Device"
+                on_text: root.update_properties()
+
+        ScrollView:
+            orientation: 'vertical'
+            do_scroll_x: False
+            do_scroll_y: True
+
+            BoxLayout:
+                size_hint_y: None
+                height: dp(30)
+                id: box_send_properties
+                orientation: 'vertical'
+
+        Widget:
+            size_hint_y: 1
+        Button:
+            text: 'Add'
+            size_hint_y: None
+            height: '30dp'
+            background_color: colors['background']
+            on_release: root.add_send()
