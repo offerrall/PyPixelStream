@@ -2,17 +2,20 @@ from kivy.graphics import Color, Line, InstructionGroup
 from kivy.metrics import dp
 from numpy import ndarray
 
+from engine_2d.send import SendDevice
 from engine_2d.source import Source
 from .render_engine import VideoRender
 
 class InteractiveVideoRender(VideoRender):
     """
-    This class is a widget that renders a video frame and allows the user to interact with the sources.
+    This class is a widget that renders a video frame and allows the user to interact with the sources and sends devices.
     """
     def __init__(self,
                  size: tuple[int, int],
                  source_list: list[Source],
-                 selection_color: tuple[int, int, int] = (255, 0, 0),
+                 sends_list: list[SendDevice],
+                 source_selection_color: tuple[int, int, int] = (255, 0, 0),
+                 send_selection_color: tuple[int, int, int] = (0, 0, 255),
                  selection_callback: callable = None,
                  deselect_callback: callable = None,
                  **kwargs):
@@ -20,8 +23,11 @@ class InteractiveVideoRender(VideoRender):
         super().__init__(size, **kwargs)
         self.source_list: list[Source] = source_list
         self.selected_source: Source | None = None
+        self.sends_list: list[SendDevice] = sends_list
+        self.selected_send: SendDevice | None = None
         self._selection_box: InstructionGroup | None = None
-        self.selection_color: tuple[int, int, int] = selection_color
+        self.source_selection_color: tuple[int, int, int] = source_selection_color
+        self.send_selection_color: tuple[int, int, int] = send_selection_color
         self.touch_offset: dict[str, int] = {'x': 0, 'y': 0}
         self.selection_callback = selection_callback
         self.deselect_callback = deselect_callback
@@ -98,7 +104,7 @@ class InteractiveVideoRender(VideoRender):
         return pos[0] <= touch.x <= pos[0] + size[0] and pos[1] <= touch.y <= pos[1] + size[1]
 
     def _get_source_from_touch(self, touch, source: Source):
-        pos, size = self._scale_source_to_widget(source)
+        pos, size = self._scale_source_or_sends_to_widget(source)
         if self._is_touch_within_bounds(touch, pos, size):
             return source
         return None
@@ -116,11 +122,11 @@ class InteractiveVideoRender(VideoRender):
         return None
 
     def _add_selection_box(self, source: Source):
-        pos, size = self._scale_source_to_widget(source)
+        pos, size = self._scale_source_or_sends_to_widget(source)
         if self._selection_box:
             self._remove_selection_box()
         if self.selected_source and self.selected_source.is_selectable:
-            self._selection_box = self._create_selection_box(pos, size)
+            self._selection_box = self._create_source_selection_box(pos, size, self.source_selection_color)
             self.canvas.add(self._selection_box)
 
     def _refresh_selection_box(self):
@@ -128,9 +134,12 @@ class InteractiveVideoRender(VideoRender):
         if self.selected_source:
             self._add_selection_box(self.selected_source)
 
-    def _create_selection_box(self, pos, size):
+    def _create_source_selection_box(self, pos, size, selection_color):
+        self._create_selection_box(pos, size, selection_color)
+
+    def _create_selection_box(self, pos, size, selection_color):
         selection_box = InstructionGroup()
-        selection_box.add(Color(*self.selection_color))
+        selection_box.add(Color(*selection_color))
 
         points = [
             [pos[0], pos[1], pos[0] + size[0], pos[1]],
@@ -148,15 +157,15 @@ class InteractiveVideoRender(VideoRender):
             self.canvas.remove(self._selection_box)
             self._selection_box = None
 
-    def _scale_source_to_widget(self, source: Source):
+    def _scale_source_or_sends_to_widget(self, source_or_send: Source | SendDevice):
         rect_pos, rect_size = self.get_image_position_and_size()
         scale_x = rect_size[0] / self._size[0]
         scale_y = rect_size[1] / self._size[1]
         
-        formated_x = int(source.x)
-        formated_y = int(source.y)
+        formated_x = int(source_or_send.x)
+        formated_y = int(source_or_send.y)
         
         pos = [formated_x * scale_x + rect_pos[0], 
-               (1 - (formated_y + source.height) / self._size[1]) * rect_size[1] + rect_pos[1]]
-        size = [source.width * scale_x, source.height * scale_y]
+               (1 - (formated_y + source_or_send.height) / self._size[1]) * rect_size[1] + rect_pos[1]]
+        size = [source_or_send.width * scale_x, source_or_send.height * scale_y]
         return pos, size

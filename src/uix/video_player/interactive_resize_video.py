@@ -28,9 +28,9 @@ class InteractiveResizeVideoRender(InteractiveVideoRender):
 
         self.corner_selection_boxes = {}
 
-    def _create_selection_box(self, pos, size):
+    def _create_source_selection_box(self, pos, size, selection_color):
         selection_box = InstructionGroup()
-        selection_box.add(Color(*self.selection_color))
+        selection_box.add(Color(*selection_color))
 
         points = [
             [pos[0], pos[1], pos[0] + size[0], pos[1]],
