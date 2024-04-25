@@ -1,4 +1,4 @@
-from numpy import ndarray, array, flipud, concatenate
+from numpy import ndarray, array, flipud, concatenate, zeros
 import socket
 from time import sleep
 
@@ -19,6 +19,7 @@ class WonderLand3d4832Device(SendDevice):
         self.ip: str = ip
         self.port: int = port
         self.frame_num: int = 0
+        self.internal_frame_buffer = zeros((32, 48, 3), dtype='uint8')
 
     def panel_to_strip(self, panel: ndarray) -> ndarray:
         """
@@ -68,4 +69,29 @@ class WonderLand3d4832Device(SendDevice):
             self.frame_num = 0
 
     def send_frame(self, frame: ndarray) -> None:
-        self.send_image_via_ws(frame)
+        """
+        Updates the internal frame buffer with the new frame and sends it to the device.
+        The frame is cropped to the device size and position.
+        """
+        self.internal_frame_buffer.fill(0)
+        frame_width, frame_height = frame.shape[1], frame.shape[0]
+        device_width, device_height = self.width, self.height
+        left = max(0, self.x)
+        right = min(frame_width, self.x + device_width)
+        top = max(0, self.y)
+        bottom = min(frame_height, self.y + device_height)
+
+        if right > left and bottom > top:
+            frame_slice = frame[top:bottom, left:right]
+
+            buffer_x1 = max(0, -self.x)
+            buffer_y1 = max(0, -self.y)
+            buffer_x2 = buffer_x1 + (right - left)
+            buffer_y2 = buffer_y1 + (bottom - top)
+
+            self.internal_frame_buffer[buffer_y1:buffer_y2, buffer_x1:buffer_x2] = frame_slice
+
+        try:
+            self.send_image_via_ws(self.internal_frame_buffer)
+        except Exception as e:
+            print(f"Error sending frame to device {self.name}: {e}")

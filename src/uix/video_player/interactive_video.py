@@ -105,6 +105,7 @@ class InteractiveVideoRender(VideoRender):
         
         if self.selected_send:
             send = self._get_send_from_click(touch)
+
             if send:
                 touch_x, touch_y = self._get_scaled_touch_position(touch)
                 self.touch_offset = {'x': touch_x - self.selected_send.x,
