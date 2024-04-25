@@ -84,17 +84,18 @@ class InteractiveVideoRender(VideoRender):
             self.selected_source.set_selected(False)
             self._remove_selection_box()
         self.selected_source = None
+        self.deselect_send(callback=False)
         if callback and self.deselect_callback:
             self.deselect_callback()
 
     def handle_selection(self, source: Source):
 
-        if self.selected_send:
-            self.deselect_send()
-
         if source != self.selected_source:
             self.deselect_source()
             self.select_source(source)
+            if self.selected_send:
+                self.deselect_send()
+                return
 
     def on_touch_down(self, touch):
         if touch.button == 'scrolldown' or touch.button == 'scrollup':
@@ -109,6 +110,7 @@ class InteractiveVideoRender(VideoRender):
             self.touch_offset = {'x': touch_x - self.selected_source.x,
                                   'y': touch_y - (self.selected_source.y + self.selected_source.height)}
             return
+ 
         self.deselect_source()
         self.deselect_send()
 
@@ -120,6 +122,15 @@ class InteractiveVideoRender(VideoRender):
             new_y = new_y - self.selected_source.height
             self.selected_source.set_position((new_x, new_y))
             self._refresh_selection_box()
+            return
+        elif self.selected_send is not None:
+            touch_x, touch_y = self._get_scaled_touch_position(touch)
+            new_x = int(touch_x - self.touch_offset['x'])
+            new_y = int(touch_y - self.touch_offset['y'])
+            self.selected_send.x = new_x
+            self.selected_send.y = new_y
+            self._refresh_selection_box()
+            return
 
     def _get_scaled_touch_position(self, touch):
         rect_pos, rect_size = self.get_image_position_and_size()
@@ -147,6 +158,13 @@ class InteractiveVideoRender(VideoRender):
             if self._get_source_from_touch(touch, source):
                 if source.is_selectable:
                     return source
+        return None
+    
+    def _get_send_from_click(self, touch):
+        for send in self.sends_list:
+            pos, size = self._scale_source_or_sends_to_widget(send)
+            if self._is_touch_within_bounds(touch, pos, size):
+                return send
         return None
 
     def _add_selection_box(self, source_or_send: Source | SendDevice):

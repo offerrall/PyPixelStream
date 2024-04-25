@@ -66,6 +66,10 @@ class InteractiveResizeVideoRender(InteractiveVideoRender):
         return super().on_touch_down(touch)
 
     def on_touch_move(self, touch):
+
+        if self.selected_send:
+            return super().on_touch_move(touch)
+
         if self._resize_mode is not None and self.selected_source:
             touch_x, touch_y = self._get_scaled_touch_position(touch)
 
