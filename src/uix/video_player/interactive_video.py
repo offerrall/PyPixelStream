@@ -84,9 +84,10 @@ class InteractiveVideoRender(VideoRender):
             self.selected_source.set_selected(False)
             self._remove_selection_box()
         self.selected_source = None
-        self.deselect_send(callback=False)
+        self.deselect_send(callback=True)
         if callback and self.deselect_callback:
             self.deselect_callback()
+  
 
     def handle_selection(self, source: Source):
 
@@ -101,6 +102,16 @@ class InteractiveVideoRender(VideoRender):
         if touch.button == 'scrolldown' or touch.button == 'scrollup':
             super().on_touch_down(touch)
             return
+        
+        if self.selected_send:
+            send = self._get_send_from_click(touch)
+            if send:
+                touch_x, touch_y = self._get_scaled_touch_position(touch)
+                self.touch_offset = {'x': touch_x - self.selected_send.x,
+                                        'y': touch_y - self.selected_send.y}
+                return
+            self.deselect_send()
+
         source = self._get_source_from_click(touch)
         if source:
             self.handle_selection(source)
