@@ -35,12 +35,34 @@ class WonderLand3d4832(BoxLayout):
             text.text = '65535'
 
 class EditWonderLand3d4832(BoxLayout):
+    device: WonderLand3d4832Device = ObjectProperty(None)
+    change_data_callback: callable = ObjectProperty(None)
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        menu = self.ids.box_send_properties.children[0]
+        menu.ids.sends_name.text = self.device.name
+        ip = self.device.ip.split('.')
+        menu.ids.ip_one.text = ip[0]
+        menu.ids.ip_two.text = ip[1]
+        menu.ids.ip_three.text = ip[2]
+        menu.ids.ip_four.text = ip[3]
+        menu.ids.port.text = str(self.device.port)
     
     def edit_send(self):
-        print('Edit Send')
-        
+        atm_type = self.ids.box_send_properties.children[0].ids
+        ip = f"{atm_type.ip_one.text}.{atm_type.ip_two.text}.{atm_type.ip_three.text}.{atm_type.ip_four.text}"
+        port = atm_type.port.text
+        name = atm_type.sends_name.text
+        name = name.replace(' ', '')
+        if name == '':
+            set_simple_popup('Error', 'Please enter a name.')
+            return
+        self.device.name = name
+        self.device.ip = ip
+        self.device.port = int(port)
+        self.parent.parent.parent.dismiss()
+        self.change_data_callback()
 
 class AddSendModal(BoxLayout):
     engine: Engine = ObjectProperty(None)
@@ -79,6 +101,3 @@ class AddSendModal(BoxLayout):
             device = WonderLand3d4832Device(name, ip=ip, port=int(port))
             self.add_send_callback(device)
             self.parent.parent.parent.dismiss()
-
-
-

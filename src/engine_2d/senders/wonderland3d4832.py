@@ -1,6 +1,7 @@
 from numpy import ndarray, array, flipud, concatenate, zeros
 import socket
 from time import sleep
+from threading import Thread
 
 from ..send import SendDevice
 
@@ -68,6 +69,15 @@ class WonderLand3d4832Device(SendDevice):
         if self.frame_num == 201:
             self.frame_num = 0
 
+    def send_frame_thread(self) -> None:
+        """
+        This function sends the frame to the device.
+        """
+        try:
+            self.send_image_via_ws(self.internal_frame_buffer)
+        except Exception as e:
+            print(f"Error sending frame to {self.name}: {e}")
+
     def send_frame(self, frame: ndarray) -> None:
         """
         Updates the internal frame buffer with the new frame and sends it to the device.
@@ -91,7 +101,5 @@ class WonderLand3d4832Device(SendDevice):
 
             self.internal_frame_buffer[buffer_y1:buffer_y2, buffer_x1:buffer_x2] = frame_slice
 
-        try:
-            self.send_image_via_ws(self.internal_frame_buffer)
-        except Exception as e:
-            print(f"Error sending frame to device {self.name}: {e}")
+        thread = Thread(target=self.send_frame_thread)
+        thread.start()

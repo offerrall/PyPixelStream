@@ -14,6 +14,7 @@ class SendItem(ButtonBehavior, BoxLayout):
     is_selected: bool = BooleanProperty(False)
     is_visible: bool = BooleanProperty(True)
     press_callback: callable = ObjectProperty(None)
+    change_data_callback: callable = ObjectProperty(None)
 
     def on_press(self):
         if self.press_callback:
@@ -24,7 +25,8 @@ class SendItem(ButtonBehavior, BoxLayout):
             self.press_callback(self)
             return
         
-        content = EditWonderLand3d4832()
+        content = EditWonderLand3d4832(device=self.send,
+                                        change_data_callback=self.change_data_callback)
         new_scene_modal = MainModalView(title="Edit Send",
                                         widget_content=content)
         new_scene_modal.open()
@@ -73,7 +75,8 @@ class SendScroll(BoxLayout):
         for send in self.engine.sends_devices:
             send_item = SendItem(engine=self.engine,
                                  send=send,
-                                 press_callback=self.sync_selected)
+                                 press_callback=self.sync_selected,
+                                    change_data_callback=self.update)
             send_item.is_visible = send.is_active
             self.ids.send_scroll.add_widget(send_item)
         
