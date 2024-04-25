@@ -18,6 +18,7 @@ class InteractiveVideoRender(VideoRender):
                  send_selection_color: tuple[int, int, int] = (0, 0, 255),
                  selection_callback: callable = None,
                  deselect_callback: callable = None,
+                 deselect_send_callback: callable = None,
                  **kwargs):
         
         super().__init__(size, **kwargs)
@@ -31,6 +32,7 @@ class InteractiveVideoRender(VideoRender):
         self.touch_offset: dict[str, int] = {'x': 0, 'y': 0}
         self.selection_callback = selection_callback
         self.deselect_callback = deselect_callback
+        self.deselect_send_callback = deselect_send_callback
 
     def change_source_list(self, source_list: list[Source], callback=True):
         self.deselect_source(callback=callback)
@@ -39,13 +41,15 @@ class InteractiveVideoRender(VideoRender):
 
     def set_frame(self, rgb_data: ndarray):
         super().set_frame(rgb_data)
-        if self.selected_source:
+        if self.selected_source or self.selected_send:
             self._refresh_selection_box()
 
     def select_source(self, source: Source, callback=True):
-        
         if source == self.selected_source:
             return
+
+        if self.selected_send:
+            self.deselect_send()
 
         if self.selected_source:
             self._remove_selection_box()
@@ -56,6 +60,25 @@ class InteractiveVideoRender(VideoRender):
         if callback and self.selection_callback:
             self.selection_callback(source)
 
+    def select_send(self, send: SendDevice):
+        if send == self.selected_send:
+            return
+
+        if self.selected_source:
+            self.deselect_source(callback=True)
+
+        if self.selected_send:
+            self._remove_selection_box()
+        self.selected_send = send
+        self._add_selection_box(send)
+
+    def deselect_send(self, callback=True):
+        if self.selected_send:
+            self._remove_selection_box()
+        self.selected_send = None
+        if self.deselect_send_callback and callback:
+            self.deselect_send_callback()
+
     def deselect_source(self, callback=True):
         if self.selected_source:
             self.selected_source.set_selected(False)
@@ -65,6 +88,10 @@ class InteractiveVideoRender(VideoRender):
             self.deselect_callback()
 
     def handle_selection(self, source: Source):
+
+        if self.selected_send:
+            self.deselect_send()
+
         if source != self.selected_source:
             self.deselect_source()
             self.select_source(source)
@@ -83,6 +110,7 @@ class InteractiveVideoRender(VideoRender):
                                   'y': touch_y - (self.selected_source.y + self.selected_source.height)}
             return
         self.deselect_source()
+        self.deselect_send()
 
     def on_touch_move(self, touch):
         if self.selected_source is not None:
@@ -121,21 +149,23 @@ class InteractiveVideoRender(VideoRender):
                     return source
         return None
 
-    def _add_selection_box(self, source: Source):
-        pos, size = self._scale_source_or_sends_to_widget(source)
+    def _add_selection_box(self, source_or_send: Source | SendDevice):
+        pos, size = self._scale_source_or_sends_to_widget(source_or_send)
         if self._selection_box:
             self._remove_selection_box()
         if self.selected_source and self.selected_source.is_selectable:
-            self._selection_box = self._create_source_selection_box(pos, size, self.source_selection_color)
+            self._selection_box = self._create_selection_box(pos, size, self.source_selection_color)
+            self.canvas.add(self._selection_box)
+        elif self.selected_send:
+            self._selection_box = self._create_selection_box(pos, size, self.send_selection_color)
             self.canvas.add(self._selection_box)
 
     def _refresh_selection_box(self):
         self._remove_selection_box()
         if self.selected_source:
             self._add_selection_box(self.selected_source)
-
-    def _create_source_selection_box(self, pos, size, selection_color):
-        self._create_selection_box(pos, size, selection_color)
+        elif self.selected_send:
+            self._add_selection_box(self.selected_send)
 
     def _create_selection_box(self, pos, size, selection_color):
         selection_box = InstructionGroup()

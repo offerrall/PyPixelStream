@@ -29,6 +29,8 @@ class SendItem(ButtonBehavior, BoxLayout):
 
 class SendScroll(BoxLayout):
     engine: Engine = ObjectProperty(None)
+    selected_send_callback: callable = ObjectProperty(None)
+    deselect_send_callback: callable = ObjectProperty(None)
     change_selected_callback: callable = ObjectProperty(None)
 
     def select_send(self, send: SendDevice):
@@ -37,7 +39,17 @@ class SendScroll(BoxLayout):
                 child.is_selected = True
             else:
                 child.is_selected = False
+        if self.selected_send_callback:
+            self.selected_send_callback(send)
     
+    def deselect_send(self):
+        for child in self.ids.send_scroll.children:
+            child.is_selected = False
+        if self.change_selected_callback:
+            self.change_selected_callback()
+        if self.deselect_send_callback:
+            self.deselect_send_callback(callback=False)
+
     def get_atm_selected_send(self):
         atm_send = None
         
@@ -68,6 +80,16 @@ class SendScroll(BoxLayout):
         for child in self.ids.send_scroll.children:
             child.is_selected = False
         
+        if check_already_selected:
+            if self.change_selected_callback:
+                self.change_selected_callback()
+            self.deselect_send()
+            return
+
+        if not check_already_selected:
+            if self.selected_send_callback:
+                self.selected_send_callback(send_item.send)
+
         send_item.is_selected = not check_already_selected
 
         if self.change_selected_callback:
