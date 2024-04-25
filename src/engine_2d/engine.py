@@ -37,6 +37,12 @@ class Engine:
         self.path_scenes = os.path.join(path_program, self.path_scenes)
         self.path_engine_save = os.path.join(path_program, self.path_engine_save)
 
+        self.path_senders: str = full_path_save + "senders/"
+        self.path_senders = os.path.join(path_program, self.path_senders)
+
+        if not exists(self.path_senders):
+            mkdir(self.path_senders)
+
         self.save_interval_seconds: int = save_interval_seconds
         self.last_save: float = time()
 
@@ -103,6 +109,17 @@ class Engine:
 
             self.set_scene(atm_scene)
         
+        for send_id in listdir(self.path_senders):
+            # for removing sends that are not in the engine save
+            path = f"{self.path_senders}/{send_id}"
+            only_id = send_id.split(".")[0]
+            if only_id not in json_dict["sends_ids"]:
+                remove(path)
+
+        for send_id in json_dict["sends_ids"]:
+            send = load_sender_from_file(send_id, self.path_senders)
+            self.sends_devices.append(send)
+        
         self.order()
 
     def check_auto_save(self) -> None:
@@ -110,12 +127,18 @@ class Engine:
         This method checks if it is time to save the state of the engine, if it is it saves it.
         """
         if time() - self.last_save > self.save_interval_seconds:
-            json_dict = {"resolution": self.size, "scenes_ids": [], "atm_scene": None}
+            json_dict = {"resolution": self.size,
+                         "scenes_ids": [],
+                         "atm_scene": None,
+                         "sends_ids": []}
             if self.atm_scene:
                 json_dict["atm_scene"] = self.atm_scene.internal_id
             for scene in self.scenes:
                 scene_id = scene.internal_id
                 json_dict["scenes_ids"].append(scene_id)
+            for send in self.sends_devices:
+                send_id = send.internal_id
+                json_dict["sends_ids"].append(send_id)
             
             with open(self.path_engine_save, "w") as file:
                 file.write(dumps(json_dict, indent=4))
@@ -123,6 +146,9 @@ class Engine:
             atm_scene = self.atm_scene
             if atm_scene:
                 atm_scene.save(self.path_scenes)
+            
+            for send in self.sends_devices:
+                save_sender_to_file(send, self.path_senders)
 
             self.last_save = time()
 

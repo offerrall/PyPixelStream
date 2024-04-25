@@ -2,10 +2,15 @@ from numpy import ndarray, array, flipud, concatenate, zeros
 import socket
 from time import sleep
 from threading import Thread
+from random import choices
+from string import ascii_letters, digits
 
 from ..send import SendDevice
 
 class WonderLand3d4832Device(SendDevice):
+    """
+    This class is a send device that sends the image to a Wonderland3d4832 device.
+    """
     def __init__(self,
                     name: str,
                     order: int = 0,
@@ -13,13 +18,17 @@ class WonderLand3d4832Device(SendDevice):
                     ip: str = '',
                     port: int = 0,
                     x: int = 0,
-                    y: int = 0) -> None:
+                    y: int = 0,
+                    internal_id: str | None = None) -> None:
         width = 48
         height = 32
         super().__init__(name, order, width, height, is_active, x, y)
         self.ip: str = ip
         self.port: int = port
         self.frame_num: int = 0
+        self.internal_id: str | None = internal_id
+        if self.internal_id is None:
+            self.internal_id: str = ''.join(choices(ascii_letters + digits, k=60))
         self.internal_frame_buffer = zeros((32, 48, 3), dtype='uint8')
 
     def panel_to_strip(self, panel: ndarray) -> ndarray:

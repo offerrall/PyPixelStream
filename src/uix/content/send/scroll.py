@@ -41,6 +41,10 @@ class SendScroll(BoxLayout):
     deselect_send_callback: callable = ObjectProperty(None)
     change_selected_callback: callable = ObjectProperty(None)
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.update()
+
     def select_send(self, send: SendDevice):
         for child in self.ids.send_scroll.children:
             if child.send == send:
