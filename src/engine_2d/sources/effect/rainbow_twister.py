@@ -13,6 +13,7 @@ class RainbowTwister(Source):
         super().__init__(name, order, width, height)
         self.properties['fps'] = fps
         self.last_time = time()
+        self.edit_if = ['width', 'height']
         self.initialize_effect()
 
     def initialize_effect(self):
@@ -38,10 +39,8 @@ class RainbowTwister(Source):
     def update(self):
         force_update = False
         if self.properties.cache:
-            edit_if = ['width', 'height']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.initialize_effect()
                     force_update = True
                     break

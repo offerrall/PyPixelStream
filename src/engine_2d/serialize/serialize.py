@@ -4,11 +4,54 @@ from os.path import exists
 
 from ..sources import get_source_type_list
 from ..filters import get_filters_list
-
+from ..senders.wonderland3d4832 import WonderLand3d4832Device
 if TYPE_CHECKING:
     from ..filter import Filter
     from ..source import Source
     from ..scene import Scene
+    from ..send import SendDevice
+
+
+def save_sender_to_file(Sender: 'SendDevice', path_to_save: str) -> None:
+    """Save the sender as a json file compatible with dict_to_source() and dict_to_filter() functions"""
+    if Sender.__class__.__name__ == "WonderLand3d4832Device":
+        Sender: WonderLand3d4832Device = Sender
+        sender_dict = { "internal_id": Sender.internal_id,
+                        "type": Sender.__class__.__name__,
+                        "name": Sender.name,
+                        "order": Sender.order,
+                        "is_active": Sender.is_active,
+                        "ip": Sender.ip,
+                        "port": Sender.port,
+                        "x": Sender.x,
+                        "y": Sender.y}
+    
+    path_to_file = f"{path_to_save}{Sender.internal_id}.json"
+    with open(path_to_file, 'w') as file:
+        dump(sender_dict, file, indent=4)
+
+def load_sender_from_file(internal_id: str, path_to_save: str) -> 'SendDevice':
+    """Load and return the sender from a json file compatible with dict_to_source() and dict_to_filter() functions"""
+    path_to_file = f"{path_to_save}{internal_id}.json"
+    if not exists(path_to_file):
+        raise FileNotFoundError(f"File '{internal_id}.json' not found")
+    
+    with open(path_to_file, 'r') as file:
+        sender_data = load(file)
+    
+    sender_type = sender_data["type"]
+    if sender_type == "WonderLand3d4832Device":
+        sender: WonderLand3d4832Device = WonderLand3d4832Device(name=sender_data["name"],
+                                                                  order=sender_data["order"],
+                                                                  is_active=sender_data["is_active"],
+                                                                  ip=sender_data["ip"],
+                                                                  port=sender_data["port"],
+                                                                  x=sender_data["x"],
+                                                                  y=sender_data["y"],
+                                                                  internal_id=sender_data["internal_id"])
+        
+    
+    return sender
 
 def save_scene_to_file(scene_name: str,
                        scene_internal_id: str,

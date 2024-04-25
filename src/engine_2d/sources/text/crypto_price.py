@@ -28,6 +28,7 @@ class CryptoPrice(Text):
         self.last_price = None
         self.last_fiat = None
         self.last_update_time = None
+        self.edit_if = ['crypto_name', 'fiat']
 
     def _update_info(self):
         try:
@@ -57,9 +58,8 @@ class CryptoPrice(Text):
             self.last_update_time = time.time()
             update = True
         
-        edit_if = ['crypto_name', 'fiat']
         for prop in self.properties.cache:
-            if prop in edit_if:
+            if prop in self.edit_if:
                 update = True
                 break
         

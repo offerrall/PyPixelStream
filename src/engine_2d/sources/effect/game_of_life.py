@@ -22,6 +22,7 @@ class GameOfLife(Source):
         self.last_frame_time = 0
         self.previous_grid = None
         self.grid_before_last = None
+        self.edit_if = ['width', 'height', 'background_transparent']
         self.reset()
         
     def reset(self) -> None:
@@ -32,10 +33,12 @@ class GameOfLife(Source):
         self.create_frame()
 
     def update(self) -> None:
-        props = ['width', 'height', 'background_transparent']
+        
         if self.properties.cache:
-            if any(prop in props for prop in self.properties.cache):
-                self.reset()
+            for prop in self.properties.cache:
+                if prop in self.edit_if:
+                    self.reset()
+                    break
             self.properties.reset_cache()
 
         if time() - self.last_frame_time > 1 / self.properties['fps']:

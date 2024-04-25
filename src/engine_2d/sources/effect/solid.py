@@ -12,6 +12,7 @@ class SolidColor(Source):
                  color: tuple[int, int, int] = (0, 0, 255)):
         super().__init__(name, order, width, height)
         self.properties['color'] = color
+        self.edit_if = ['color', 'width', 'height']
 
     def create_solid_color(self) -> None:
         self.frame = full((self.height,
@@ -22,10 +23,8 @@ class SolidColor(Source):
     def update(self) -> None:
 
         if self.properties.cache:
-            edit_if = ['color', 'width', 'height']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.create_solid_color()
                     break
 

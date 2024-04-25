@@ -28,9 +28,11 @@ class InteractiveResizeVideoRender(InteractiveVideoRender):
 
         self.corner_selection_boxes = {}
 
-    def _create_selection_box(self, pos, size):
+    def _create_selection_box(self, pos, size, selection_color):
+        if self.selected_send is not None:
+            return super()._create_selection_box(pos, size, selection_color)
         selection_box = InstructionGroup()
-        selection_box.add(Color(*self.selection_color))
+        selection_box.add(Color(*selection_color))
 
         points = [
             [pos[0], pos[1], pos[0] + size[0], pos[1]],
@@ -64,6 +66,10 @@ class InteractiveResizeVideoRender(InteractiveVideoRender):
         return super().on_touch_down(touch)
 
     def on_touch_move(self, touch):
+
+        if self.selected_send:
+            return super().on_touch_move(touch)
+
         if self._resize_mode is not None and self.selected_source:
             touch_x, touch_y = self._get_scaled_touch_position(touch)
 

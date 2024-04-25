@@ -20,7 +20,8 @@ class Video(Source):
         self.properties['video_path'] = video_path
         self.properties['video_volume'] = video_volume
         self.video_kivy = None
-        
+        self.edit_if = ['video_path']
+
         if not exists(video_path):
             self.not_video()
             self.properties['video_path'] = ""
@@ -71,10 +72,8 @@ class Video(Source):
             if "video_volume" in self.properties.cache:
                 self.set_volume(int(self.properties['video_volume']))
 
-            edit_if = ['video_path']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.init_video()
                     break
 

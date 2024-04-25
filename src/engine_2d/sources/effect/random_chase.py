@@ -17,6 +17,7 @@ class RandomChase(Source):
         self.properties['fps'] = fps
         self.properties['orientation'] = orientation
         self.last_frame_time = 0
+        self.edit_if = ['width', 'height', 'orientation']
         self.reset()
     
     def reset(self) -> None:
@@ -40,10 +41,8 @@ class RandomChase(Source):
     def update(self) -> None:
 
         if self.properties.cache:
-            edit_if = ['width', 'height', 'orientation']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.reset()
                     break
             self.properties.reset_cache()

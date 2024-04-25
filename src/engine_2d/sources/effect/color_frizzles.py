@@ -19,6 +19,7 @@ class ColorFrizzles(Source):
         self.properties['fps'] = fps
         self.properties['transparent_background'] = transparent_background
         self.last_frame_time = 0
+        self.edit_if = ['width', 'height', 'transparent_background']
         self.reset()
 
     def reset(self):
@@ -28,10 +29,8 @@ class ColorFrizzles(Source):
     def update(self):
         force_update = False
         if self.properties.cache:
-            edit_if = ['width', 'height', 'transparent_background']
-
             for prop in self.properties.cache:
-                if prop in edit_if:
+                if prop in self.edit_if:
                     self.reset()
                     force_update = True
                     break
