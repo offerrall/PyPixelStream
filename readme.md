@@ -77,10 +77,10 @@ PyPixelStream is built with Python and uses the following libraries:
 *[pyaudiowpatch](https://github.com/s0d3s/PyAudioWPatch) must be installed manually, it is not included in the requirements.txt file.
 
 ## TODO
-- [ ] Add More Documentation.
+- [v] Add More Documentation.
 - [ ] Add more sources and filters.
 - [ ] Add Compatibility with more LED panels.
-- [ ] Add a ui for the configuration of the LED panels/strips connection.
+- [v] Add a ui for the configuration of the LED panels/strips connection.
 - [ ] Add events for the sources and filters, like twitch alerts.
 
 ## Contributing
