@@ -16,6 +16,7 @@ class Engine:
 
     """
     This class manages the engine of the application, it is in charge of managing the scenes and the background of the application.
+    Also manages the sends devices, devices that send the image to the different outputs.
     It is also in charge of saving the state of the application in a json file.
     """
 
@@ -33,7 +34,6 @@ class Engine:
         self.path_scenes: str = full_path_save + "scenes/"
         self.path_engine_save: str = full_path_save + "engine_save.json"
 
-        
         self.path_scenes = os.path.join(path_program, self.path_scenes)
         self.path_engine_save = os.path.join(path_program, self.path_engine_save)
 
@@ -203,6 +203,9 @@ class Engine:
         if self.atm_scene:
             self.background[...] = self.background_template
             self.atm_scene.update(self.background)
+            for send in self.sends_devices:
+                if send.is_active:
+                    send.send_frame(self.background)
             return True
         return False
     

@@ -11,7 +11,6 @@ from kivy.clock import Clock
 
 from uix.main.main import MainContainer
 from config.load_kv import load_kv_files
-from ws2812b.numpy_to_led import send_image_via_ws
 
 class Main(BoxLayout):
     def __init__(self, **kwargs):
@@ -23,22 +22,12 @@ class Main(BoxLayout):
         Clock.schedule_once(self.update)
         Window.bind(on_request_close=self.on_request_close)
 
-    def send_image(self, image):
-        """
-        This function sends an image to the led panel.
-        """
-        #send_image_via_ws(image, self.atm_frame)
-        self.atm_frame += 1
-        if self.atm_frame == 201:
-            self.atm_frame = 0
-
     def update(self, dt):
         """
         This calls update on the engine and updates the video feed.
         """
         self.main_container.engine.update() 
         self.main_container.interactive_resize_video.set_frame(self.main_container.engine.background)
-        self.send_image(self.main_container.engine.background)
         Clock.schedule_once(self.update)
 
     def on_request_close(self, *args):

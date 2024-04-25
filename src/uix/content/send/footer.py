@@ -8,8 +8,6 @@ from engine_2d.send import SendDevice
 from uix.main_modal_view import MainModalView
 from uix.modal.add_send import AddSendModal
 
-from random import randint
-
 class SendFooter(BoxLayout):
     """
     Footer of the sends list, with the buttons to add, remove, move up and move down
@@ -18,6 +16,7 @@ class SendFooter(BoxLayout):
     change_callback: callable = ObjectProperty(None)
     mode_is_selected: bool = BooleanProperty(False)
     send_scroll: BoxLayout = ObjectProperty(None)
+    delete_send_callback: callable = ObjectProperty(None)
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -60,6 +59,7 @@ class SendFooter(BoxLayout):
         self.engine.sends_devices.remove(atm)
         self.engine.order_sends()
         self.change_callback()
+        self.delete_send_callback()
         self.set_mode()
     
     def move_send_up(self):

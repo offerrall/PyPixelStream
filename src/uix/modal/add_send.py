@@ -3,7 +3,7 @@ from kivy.uix.textinput import TextInput
 from kivy.properties import ObjectProperty
 from kivy.metrics import dp
 from engine_2d.engine import Engine
-from engine_2d.send import WonderLand3d4832Device
+from engine_2d.senders.wonderland3d4832 import WonderLand3d4832Device
 
 from uix.simple_popup import set_simple_popup
 
@@ -68,7 +68,7 @@ class AddSendModal(BoxLayout):
             ip = f"{atm_type.ip_one.text}.{atm_type.ip_two.text}.{atm_type.ip_three.text}.{atm_type.ip_four.text}"
             port = self.atm_type.ids.port.text
 
-            device = WonderLand3d4832Device(name, ip=ip, port=port)
+            device = WonderLand3d4832Device(name, ip=ip, port=int(port))
             self.add_send_callback(device)
             self.parent.parent.parent.dismiss()
 

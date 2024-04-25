@@ -47,6 +47,7 @@ class ContentScreenManager(ScreenManager):
         self.send_scroll = SendScroll(engine=self.engine)
         self.send_footer = SendFooter(engine=self.engine, send_scroll=self.send_scroll)
         self.send_footer.change_callback = self.send_scroll.update
+        self.send_footer.delete_send_callback = self.send_scroll.deselect_send
         self.video_player.deselect_send_callback = self.send_scroll.deselect_send
         self.send_scroll.deselect_send_callback = self.video_player.deselect_send
         self.send_scroll.change_selected_callback = self.send_footer.set_mode
