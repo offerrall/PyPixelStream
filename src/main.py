@@ -17,7 +17,6 @@ class Main(BoxLayout):
         super().__init__(**kwargs)
         self.main_container = MainContainer() # This is the main container for the application
         self.add_widget(self.main_container)
-        self.atm_frame = 0
 
         Clock.schedule_once(self.update)
         Window.bind(on_request_close=self.on_request_close)
