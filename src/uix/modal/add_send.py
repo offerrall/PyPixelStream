@@ -34,6 +34,14 @@ class WonderLand3d4832(BoxLayout):
         if port > 65535:
             text.text = '65535'
 
+class EditWonderLand3d4832(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def edit_send(self):
+        print('Edit Send')
+        
+
 class AddSendModal(BoxLayout):
     engine: Engine = ObjectProperty(None)
     add_send_callback: callable = ObjectProperty(None)

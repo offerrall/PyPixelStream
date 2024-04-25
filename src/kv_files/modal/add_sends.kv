@@ -65,6 +65,28 @@
             input_filter: 'int'
             on_text: root.check_port(port)
 
+<EditWonderLand3d4832>
+    orientation: 'vertical'
+    ScrollView:
+        orientation: 'vertical'
+        do_scroll_x: False
+        do_scroll_y: True
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(90)
+            id: box_send_properties
+            orientation: 'vertical'
+            WonderLand3d4832:
+    Widget:
+        size_hint_y: 1
+    Button:
+        text: 'Aplly Changes'
+        size_hint_y: None
+        height: '30dp'
+        background_color: colors['background']
+        on_release: root.edit_send()
+
 <AddSendModal>
     BoxLayout:
         orientation: 'vertical'

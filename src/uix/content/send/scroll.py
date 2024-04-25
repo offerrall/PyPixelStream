@@ -5,6 +5,9 @@ from kivy.uix.behaviors import ButtonBehavior
 from engine_2d.engine import Engine
 from engine_2d.send import SendDevice
 
+from uix.main_modal_view import MainModalView
+from uix.modal.add_send import EditWonderLand3d4832
+
 class SendItem(ButtonBehavior, BoxLayout):
     engine: Engine = ObjectProperty(None)
     send: SendDevice = ObjectProperty(None)
@@ -21,7 +24,10 @@ class SendItem(ButtonBehavior, BoxLayout):
             self.press_callback(self)
             return
         
-        print("Edit send")
+        content = EditWonderLand3d4832()
+        new_scene_modal = MainModalView(title="Edit Send",
+                                        widget_content=content)
+        new_scene_modal.open()
     
     def view(self):
         self.send.is_active = not self.send.is_active
