@@ -106,7 +106,7 @@ class InteractiveVideoRender(VideoRender):
         if self.selected_send:
             send = self._get_send_from_click(touch)
 
-            if send:
+            if send and send == self.selected_send:
                 touch_x, touch_y = self._get_scaled_touch_position(touch)
                 self.touch_offset = {'x': touch_x - self.selected_send.x,
                                         'y': touch_y - self.selected_send.y}
@@ -173,6 +173,9 @@ class InteractiveVideoRender(VideoRender):
         return None
     
     def _get_send_from_click(self, touch):
+        if self.selected_send and self._get_source_from_touch(touch, self.selected_send):
+            return self.selected_send
+
         for send in self.sends_list:
             pos, size = self._scale_source_or_sends_to_widget(send)
             if self._is_touch_within_bounds(touch, pos, size):
