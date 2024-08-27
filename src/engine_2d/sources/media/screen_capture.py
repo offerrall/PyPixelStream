@@ -24,7 +24,8 @@ class ScreenCapture(Source):
                 frame = sct.grab(sct.monitors[self.properties['monitor']])
                 frame_array = np.array(frame)
                 frame_array = frame_array[..., :3]
-                frame_array = nearest_neighbor_resize_vectorized(frame_array, self.width, self.height)
+                if frame_array.shape[0] != self.height or frame_array.shape[1] != self.width:
+                    frame_array = nearest_neighbor_resize_vectorized(frame_array, self.width, self.height)
                 self.frame = convert_bgra_to_rgb(frame_array)
 
     def update(self) -> None:
