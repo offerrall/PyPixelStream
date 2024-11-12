@@ -18,13 +18,8 @@ class Main(BoxLayout):
         self.main_container = MainContainer()  # This is the main container for the application
         self.add_widget(self.main_container)
 
-        # FPS Label
-        self.fps_label = Label(size_hint=(None, None), size=(100, 50), pos_hint={'x': 0.9, 'top': 1})
-        self.add_widget(self.fps_label)
-
         # Schedule update methods
         Clock.schedule_once(self.update)
-        Clock.schedule_interval(self.update_fps, 1.0)  # Update FPS every second
         Window.bind(on_request_close=self.on_request_close)
 
     def update(self, dt):
@@ -34,13 +29,6 @@ class Main(BoxLayout):
         self.main_container.engine.update()
         self.main_container.interactive_resize_video.set_frame(self.main_container.engine.background)
         Clock.schedule_once(self.update)
-
-    def update_fps(self, dt):
-        """
-        Update the FPS label once every second.
-        """
-        fps = Clock.get_fps()  # Get the current FPS
-        self.fps_label.text = f"FPS: {fps:.0f}"
 
     def on_request_close(self, *args):
         """
